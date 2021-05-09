@@ -13,16 +13,86 @@
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
-					<li><a href="#">Main Page</a></li>
-					<li><a href="#">Animals</a></li>
-					<li><a href="#">Events</a></li>
-					<li><a href="#">About Zoo</a></li>
-					<li><a href="#">Sign In</a></li>
-					<li><a href="#">Sign Up</a></li>
+					<li><a href="index.html">Main Page</a></li>
+					<li><a href="animals.html">Animals</a></li>
+					<li><a href="events.html">Events</a></li>
+					<li><a href="about.html">About Zoo</a></li>
+					<li><a href="#" onclick="togglePopup()">Sign In</a></li>
+					<li><a href="#" onclick="toggleRegPopup()">Sign Up</a></li>
 				</ul>
 			</nav>
 		</header>
 		<main>
+			<div class="login-popup" id="login-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="togglePopup()">×</div>
+					<p class="poptitle">Sign In</p>
+					<div class=tabs>
+						<div class="buttons">
+							<button onclick="show(0)">Visitor</button>
+							<button onclick="show(1)">Employee</button>
+						</div>
+						<div class="loginPanel">
+							<input class="id" type="id" name="id" placeholder="User ID">
+							<input class="pass" type="password" name="pass" placeholder="Password">
+							<button class="btn">Sign In</button>
+						</div>
+						<div class="loginPanel">
+							<input class="id" type="id" name="id" placeholder="User ID (employee)">
+							<input class="pass" type="password" name="pass" placeholder="Password">
+							<button class="btn">Sign In</button>
+						</div>
+					</div>
+                </div>
+            </div>
+
+            <div class="register-popup" id="register-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleRegPopup()">×</div>
+					<p class="poptitle2">Sign Up</p>
+					<input class="left" type="text" name="name" placeholder="Full Name">
+					<input class="right" type="text" name="email" placeholder="Email">
+					<input class="left" type="text" name="phone" placeholder="Phone Number">
+					<input class="right" type="text" name="date" placeholder="Date of Birth (dd.mm.yy)">
+					<input class="left" type="password" name="pass" placeholder="Password">
+					<input class="right" type="password" name="pass" placeholder="Confirm Password">
+					<p class="gender">Gender: </p>
+					<input class="radio" type="radio" name="check" id="male" value="Male">
+					<label for="male">Male</label>
+					<input class="radio" type="radio" name="check" id="female" value="Female">
+					<label for="female">Female</label>
+					<button class="btn">Sign Up</button>
+                </div>
+            </div>
+
+			<script>
+				var tabbtns = document.querySelectorAll(".tabs .buttons button");
+				var tabPan = document.querySelectorAll(".tabs .loginPanel");
+				function show(index) {
+					tabbtns.forEach(function(node){
+						node.style.backgroundColor="";
+						node.style.color="";
+					});
+					tabbtns[index].style.backgroundColor="#404040";
+					tabbtns[index].style.color="white";
+					tabPan.forEach(function(node){
+						node.style.display="none";
+					});
+					tabPan[index].style.display="block";
+					tabPan[index].style.backgroudColor="#404040";
+				}
+				show(0);
+			</script>
+			<script>
+                function togglePopup(){
+                    document.getElementById("login-popup").classList.toggle("activate");
+                }
+				function toggleRegPopup(){
+                    document.getElementById("register-popup").classList.toggle("activate");
+                }
+            </script>
             <section class="mainsec">
                 <h2>Animals</h2>
 				<div class="picdiv">
@@ -64,10 +134,10 @@
 				<div class="footer-links">
 					<h5>CATEGORIES</h5>
 					<ul class="footer-links-first">
-						<li><a href="#">Main Page</a></li>
-						<li><a href="#">Animals</a></li>
-						<li><a href="#">Events</a></li>
-						<li><a href="#">About Zoo</a></li>
+						<li><a href="index.html">Main Page</a></li>
+						<li><a href="animals.html">Animals</a></li>
+						<li><a href="events.html">Events</a></li>
+						<li><a href="about.html">About Zoo</a></li>
 					</ul>
 				</div>
 				<div class="partner-list">

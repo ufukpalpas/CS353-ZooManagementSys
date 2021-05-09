@@ -524,6 +524,66 @@ header .header-cases {
 }
 /* OTHERS END*/
 
+/*Events page style*/
+
+
+.event-links {
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+.event-links h2 {
+	font-family: ariel;
+	font-size: 28px;
+	color: #111;
+	font-weight: 600;
+	text-transform: uppercase;
+	padding-top: 5%;
+	text-align: center;
+}
+
+.event-links .cases-link {
+	float: left;
+	width: 230px;
+	height: 230px;
+	margin: 20px 20px; /* top leftright bottom*/
+	background-color: #e3e3e3;
+}
+
+.event-links p {
+	font-family: ariel;
+	font-size: 18px;
+	color: gray;
+	font-weight: 400;
+	margin-top: 10px;
+	text-align: center;
+}
+
+.event-links .cases-link .edu_prog{
+   max-width: 230px;
+   max-height: 230px;
+   padding-bottom: 20px;
+}
+
+.event-links .ev-names {
+	font-family: ariel;
+	font-size: 18px;
+	color:slategray;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.eventswrap {
+    width: 100%;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	padding-top: 1%;
+	margin-bottom: 15%;
+}
+
+/*Events page end*/
+
 
 /*FOOTER*/
 
