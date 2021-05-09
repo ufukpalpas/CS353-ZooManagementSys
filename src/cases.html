@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> KasaloZoo </title>
+		<meta charset = "UTF-8">
+		<link rel="stylesheet" href="style.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
+		<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
+	</head>
+
+	<body>
+		<header>
+			<a href="index.html" class="header-brand">KasaloZoo</a>
+			<img class="logo" src="image/balina.png" alt="kasalot logo">
+			<nav>
+				<ul>
+					<li><a href="#">Main Page</a></li>
+					<li><a href="#">Animals</a></li>
+					<li><a href="#">Events</a></li>
+					<li><a href="#">About Zoo</a></li>
+					<li><a href="#" onclick="togglePopup()">Sign In</a></li>
+					<li><a href="#">Sign Up</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+            <div class="login-popup" id="login-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                  <div class="close" onclick="togglePopup()">×</div>
+                  <h1>Title</h1>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aspernatur laborum rem sed laudantium excepturi veritatis voluptatum architecto, dolore quaerat totam officiis nisi animi accusantium alias inventore nulla atque debitis.</p>
+                </div>
+            </div>
+			<script>
+                function togglePopup(){
+                    document.getElementById("login-popup").classList.toggle("activate");
+                }
+            </script>
+
+			<section class="cases-links">
+				<div class="wrapper">
+					<!-- Orta kısım -->
+					<div class="main">
+						<div class="main-image"> 
+							<image src="image/lion.png" alt="Lion image" class="lion-image"></image>
+						</div>
+						<div class="second">
+							<h2>Welcome to KasaloZoo</h2>
+							<p>Everything about the zoo and the animals are available online for everyone now!</p>
+						</div>
+					</div>
+
+
+					<div class="owl-carousel owl-theme">
+						<div class="comment">
+							<h5>Walter White</h5>
+							<div class="comment-div">
+								<p class="comment-header">Best zoo in the area!</p>
+								<p class="comment-text">I love KasaloZoo! it is a perfect place for both children and adults...
+									<br> Perfect, visit animals closely...
+								</p>
+								<p class="comment-date">14 APRIL 2018</p>
+							</div>
+						</div>
+						<div class="comment"><h4>2</h4>
+						
+						</div>
+						<div class="comment"><h4>3</h4>
+						
+						</div>
+					</div>
+
+				</div>
+			</section>
+		</main>
+		<div class="wrapper"> <!-- alt kısım -->
+			<footer>
+				<div class="cont">
+				<div class="add-link-div">
+					<h5>Address</h5>
+					<p>
+					Bilkent University<br>
+					06800 Bilkent, Ankara<br>
+					TURKEY
+					</p>
+					<br>
+					<br>
+					<a href="#">
+						<img src="image/youtube.png" alt="youtube logo">
+					</a>
+					<a href="#">
+						<img src="image/twitter.png" alt="twitter logo">
+					</a>
+					<a href="#">
+						<img src="image/facebook.png" alt="facebook logo">
+					</a>
+				</div>
+				<div class="footer-links">
+					<h5>CATEGORIES</h5>
+					<ul class="footer-links-first">
+						<li><a href="#">Main Page</a></li>
+						<li><a href="#">Animals</a></li>
+						<li><a href="#">Events</a></li>
+						<li><a href="#">About Zoo</a></li>
+					</ul>
+				</div>
+				<div class="partner-list">
+					<h5>PARTNERS</h5>
+					<p>Bilkent University</p>
+				</div>
+				</div>
+			</footer>
+		</div>
+		<script src="owlcarousel/jquery.min.js"></script>
+		<script src="owlcarousel/owl.carousel.js"></script>
+		<script>
+			$('.owl-carousel').owlCarousel({
+				loop:true,
+				margin:20,
+				nav:false,
+				responsive:{
+					0:{
+						items:1
+					},
+					600:{
+						items:1
+					},
+					1000:{
+						items:1
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
