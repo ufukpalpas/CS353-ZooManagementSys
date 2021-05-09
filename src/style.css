@@ -184,7 +184,7 @@ header .header-cases {
 /*MAIN*/
 
 /* LOGIN POPUP*/
-.login-popup .overlay {
+.overlay {
   position:fixed;
   top:0px;
   left:0px;
@@ -200,8 +200,8 @@ header .header-cases {
   left:50%;
   transform:translate(-50%,-50%) scale(0);
   background:#fff;
-  width:35%;
-  height:70%;
+  width:25%;
+  height:50%;
   z-index:2;
   text-align:center;
   border: 2px solid gray;
@@ -211,7 +211,7 @@ header .header-cases {
   font-family:"Open Sans",sans-serif;
 }
  
-.login-popup .close {
+.close {
   cursor:pointer;
   position:absolute;
   right:20px;
@@ -235,7 +235,145 @@ header .header-cases {
   transition:all 300ms ease-in-out;
   transform:translate(-50%,-50%) scale(1);
 }
+
+.poptitle {
+	font-size: 38px;
+	font-family: Arial;
+	font-weight: 400;
+	color:#222;
+	padding-top: 10%;
+}
+
+.tabs {
+	width: 100%;
+	height: 100%;
+	margin-top: 50px;
+}
+
+.tabs .buttons {
+	height: 10%;
+}
+
+.tabs .buttons button {
+	width: 50%;
+	height: 100%;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 10px;
+	font-family: Arial;
+	font-size: 16px;
+	background-color: #eee;
+}
+
+.tabs .loginPanel {
+	height: 55%;
+	background-color: white;
+	color: #404040;
+	text-align: center;
+	padding-top: 25px;
+	box-sizing: border-box;
+	font-family: Arial;
+	display: none;
+}
+
+.id {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+}
+
+.pass {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+}
+
+.btn {
+	width: 100%;
+	background-color: #404040; /* Green */
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	margin-top: 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
 /*END OF LOGIN POPUP*/ 
+
+/*REGISTER POPUP*/
+
+ .register-popup .content {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%) scale(0);
+	background:#fff;
+	width:25%;
+	height:50%;
+	z-index:2;
+	text-align:center;
+	border: 2px solid gray;
+	border-radius: 5%;
+	padding:20px;
+	box-sizing:border-box;
+	font-family:"Open Sans",sans-serif;
+  }
+
+  .poptitle2 {
+	font-size: 38px;
+	font-family: Arial;
+	font-weight: 400;
+	color:#222;
+	padding-top: 10%;
+	padding-bottom: 5%;
+  } 
+
+ .register-popup.activate .overlay {
+	display:block;
+  }
+   
+ .register-popup.activate .content {
+	transition:all 300ms ease-in-out;
+	transform:translate(-50%,-50%) scale(1);
+  }
+  
+ .right {
+	width: 45%;
+	padding: 12px 20px;
+	margin: 8px 10px;
+	box-sizing: border-box;
+	float:left;
+ }
+
+.left {
+	width: 45%;
+	padding: 12px 20px;
+	margin: 8px 10px;
+	box-sizing: border-box;
+	float:left;
+}
+
+.gender {
+	margin-top: 25px;
+	padding-bottom: 10px;
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.register-popup .content label {
+	margin-right: 20px;
+	font-size: 18px;
+	font-weight: 400;
+}
+
+/*END OF REGISTER POPUP*/ 
 
 .main-image {
 	width: max-content;
@@ -338,6 +476,54 @@ header .header-cases {
 .main{
 	display:flex;
 }
+ /* OTHER PAGES STYLE*/
+.mainsec h2 {
+	font-family: ariel;
+	font-size: 32px;
+	color: #3c3c3c;
+	font-weight: 600;
+	margin-left: 10%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+    border-bottom: 3px solid #d5d5d5;
+    line-height: 50px;
+}
+
+.mainsec .mainpic {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.picdiv {
+    display: flex;
+    justify-content: center;
+}
+
+.mainsec article h3 {
+	font-family: ariel;
+	font-size: 26px;
+	color: #3c3c3c;
+	font-weight: 600;
+	padding-bottom: 20px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.mainsec article p {
+	font-family: ariel;
+	font-size: 24px;
+	color: grey;
+	font-weight: 500;
+	line-height: 30px;
+    display: flex;
+    justify-content: center;
+	margin-bottom: 10%;
+}
+/* OTHERS END*/
+
 
 /*FOOTER*/
 
