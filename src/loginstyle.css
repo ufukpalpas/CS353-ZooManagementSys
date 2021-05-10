@@ -192,7 +192,34 @@ header nav ul li a{
     z-index:1;
     display:none;
   }
-   
+.rightover {
+	width: 45%;
+	padding: 12px 20px;
+	margin: 8px 10px;
+	box-sizing: border-box;
+ }
+
+.leftover {
+	width: 45%;
+	padding: 12px 20px;
+	margin: 8px 10px;
+	box-sizing: border-box;
+}
+.leftCheck{
+    margin-right: 34%
+}
+
+.radioMargin{
+    margin-left: 20px;
+}
+
+.radioMinusMargin{
+    margin-left: -5px;
+}
+.rightCheck{
+    margin-right: 34%
+}
+
   .user-popup .content {
     position:absolute;
     top:50%;
@@ -209,6 +236,8 @@ header nav ul li a{
     box-sizing:border-box;
     font-family:"Open Sans",sans-serif;
   }
+
+
    
   .close {
     cursor:pointer;
@@ -247,6 +276,31 @@ header nav ul li a{
  .btn {
 	width: 100%;
 	background-color: #404040;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	margin-top: 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+.confirmBtn {
+	width: 100%;
+	background-color: #05a05a;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	margin-top: 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+.cancelBtn {
+	width: 100%;
+	background-color: #999999;
 	border: none;
 	color: white;
 	padding: 15px 32px;
