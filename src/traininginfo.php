@@ -1,24 +1,15 @@
 <?php
 include("config.php");
 session_start();
-
-$usertype = 0; // 0 no user 1 visitor 2 keeper 3 vet 4 coordinator 5 guide
-
-if($_SESSION['login_user']){
-	$usertype = 1;
-} else if($_SESSION['keeper_user']){
-	$usertype = 2;
-} else if($_SESSION['vet_user']){
-	$usertype = 3;
-} else if($_SESSION['coor_user']){
-	$usertype = 4;
-} else if($_SESSION['guide_user']){
-	$usertype = 5;
-}
-
 if($_SESSION['login_user']) // değişecek
 {
     $cageid = $_SESSION['cageid'];
+    $animalid = $_SESSION['animalid'];
+    
+    $anamequery = "select name from animal where animal_id ='". $animalid ."'"; 
+    $anamearr = mysqli_query($mysqli, $anamequery);
+    $fetchaarr = mysqli_fetch_array($anamearr, MYSQLI_ASSOC);
+    $aname = $fetchaarr['name'];
 
     $userid = $_SESSION['login_user']; // değişecek
     $namequery = "select name from user where user_id ='". $userid ."'"; //session name e kadarlık kısım indexin.html e alınacak buraya sessiondan çekme gelecek
@@ -101,52 +92,32 @@ if(isset($_POST['logout'])){
             </script>
             <section class="mainsec">
                 <?php
-                echo "<h2>Animals in Cage #$cageid</h2>
+                echo "<h2>Cage #$cageid / Animal #$animalid / $aname</h2>
 				<div style=\"width:87%; height:87%; background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px;\">
             	<hr style=\"margin-left: 20px; margin-right: 20px;\">";
 				
 				$query = 
 				"select *
 				 from animal
-				 where cage_id = $cageid;";
+				 where animal_id = $animalid;";
 				echo "<table style=\"width:90%; margin-top: 10px; margin-left: 60px; margin-right: 10px;\">";
 				echo "<tr class=\"toptable\">
-						<th class=\"thtitle\">Animal ID<hr></th>    
-						<th class=\"thtitle\">Name<hr></th>    
-						<th class=\"thtitle\">Species<hr></th>    
-						<th class=\"thtitle\">Birth Date<hr></th>   
-						<th class=\"thtitle\">Gender<hr></th>  
-						<th class=\"thtitle\">Weight<hr></th>  
-						<th class=\"thtitle\">Height<hr></th>   
-                        <th class=\"thtitle\">Origin<hr></th> 
-                        <th class=\"thtitle\">Endangered<hr></th> 
-                        <th class=\"thtitle\">Habitat<hr></th> 
-                        <th class=\"thtitle\">Diet<hr></th> 
-                        <th class=\"thtitle\">Status<hr></th> 
-                        <th class=\"thtitle\">Last Health Check<hr></th> 
-                        <th class=\"thtitle\">Treatment<hr></th> 
-						<th class=\"thtitle\">Training<hr></th>  
+						<th class=\"thtitle\">Training Topic<hr></th>    
+						<th class=\"thtitle\">Training Date<hr></th>    
+                        <th class=\"thtitle\">Remove<hr></th> 
+                        <th class=\"thtitle\">New Date<hr></th> 
+						<th class=\"thtitle\">Update<hr></th>  
 				</tr>";
                 $arr = array();
 				if($result = $mysqli->query($query)){
                     $i = 0;
 					while(($row = $result->fetch_assoc())!= null)  {
 						echo "<tr>
-								<th>". $row['animal_id'] ."<hr></th>    
-								<th>". $row['name'] ."<hr></th>    
-								<th>". $row['species'] ."<hr></th>    
-								<th>". $row['date_of_birth'] ."<hr></th>    
-								<th>". $row['gender'] ."<hr></th>    
-								<th>". $row['weight'] ."<hr></th> 
-                                <th>". $row['height'] ."<hr></th> 
-                                <th>". $row['origin'] ."<hr></th> 
-                                <th>". $row['isEndangered'] ."<hr></th> 
-                                <th>". $row['habitat'] ."<hr></th> 
-                                <th>". $row['diet'] ."<hr></th> 
-                                <th>". $row['status'] ."<hr></th> 
-                                <th>". $row['last_health_check'] ."<hr></th> 
-                                <th><form method=\"post\"><input type=\"submit\" name=\"".$i."req\" class=\"btn3\" value=\"Request Treatment\"></form><hr></th>  
-								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."tra\" class=\"btn3\" value=\"Training Information\"></form><hr></th>  
+								<th>". $row['training_topic'] ."<hr></th>    
+								<th>". $row['training_date'] ."<hr></th>    
+                                <th><form method=\"post\"><input type=\"submit\" name=\"".$i."req\" class=\"btn3\" value=\"Remove\"></form><hr></th> 
+                                <th><input name=\"newd\" class=\"right\" type=\"text\" name=\"newdate\" placeholder=\"Enter new date\" required=\"required\"><hr></th> 
+								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."tra\" class=\"btn3\" value=\"Update\"></form><hr></th>  
 							</tr>";
                             $arr[$i] = $row['animal_id'];
                             $i = $i + 1;
@@ -155,7 +126,7 @@ if(isset($_POST['logout'])){
 					echo "Error while retrieving animal table. Error: " . mysqli_error($mysqli);
 				}
 				echo "</table>";
-                
+                /*
 				if($_SERVER["REQUEST_METHOD"] == "POST"){
 					for($k = 0; $k < count($arr); $k++){
 						$place = strval($k) . "req";
@@ -166,11 +137,11 @@ if(isset($_POST['logout'])){
 						}
 						if(isset($_POST[$place2])){//Training Information
                             $_SESSION['animalid'] = $arr[$k];
-							echo '<script type="text/javascript">location.href = "traininginfo.php";</script>';
+							header("location: traininginfo.php");
 							break;
 						}
 					}
-				}
+				}*/
 				?>
 				</div>
 			</section>

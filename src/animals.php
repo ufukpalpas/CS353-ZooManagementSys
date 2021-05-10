@@ -10,8 +10,8 @@ function vislogin($mysqli){
     if(($result = $mysqli->query($query)) && ($result1 = $mysqli->query($query1))) {
 		if($result->num_rows == 1){
 			if($result1->num_rows == 1){
-				$_SESSION['login_user'] = $userid;
-				//header("location: grouptour.html");
+				$_SESSION['type'] = "visitor";
+				header("location: indexin.php");
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use employee sign in!");
@@ -88,16 +88,20 @@ function emplogin($mysqli){
 
 			if($result1->num_rows == 1){ //keeper
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "keeper";
+				header("location: indexin.php");
 			} else if($result2->num_rows == 1){ //vet
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "vet";
+				header("location: indexin.php");
 			} else if($result3->num_rows == 1){ //coordinator
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "coor";
+				header("location: indexin.php");
 			} else if($result4->num_rows == 1){ //guide
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "guide";
+				header("location: indexin.php");
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use visitor login!");

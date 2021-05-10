@@ -10,8 +10,8 @@ function vislogin($mysqli){
     if(($result = $mysqli->query($query)) && ($result1 = $mysqli->query($query1))) {
 		if($result->num_rows == 1){
 			if($result1->num_rows == 1){
-				$_SESSION['login_user'] = $userid;
-				//header("location: grouptour.html");
+				$_SESSION['type'] = "visitor";
+				header("location: indexin.php");
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use employee sign in!");
@@ -87,16 +87,20 @@ function emplogin($mysqli){
 
 			if($result1->num_rows == 1){ //keeper
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "keeper";
+				header("location: indexin.php");
 			} else if($result2->num_rows == 1){ //vet
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "vet";
+				header("location: indexin.php");
 			} else if($result3->num_rows == 1){ //coordinator
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "coor";
+				header("location: indexin.php");
 			} else if($result4->num_rows == 1){ //guide
 				$_SESSION['login_user'] = $userid;
-				header("location: mycagesin.php");
+				$_SESSION['type'] = "guide";
+				header("location: indexin.php");
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use visitor login!");
@@ -242,28 +246,28 @@ if(isset($_POST['emploginn'])){
                 <p>Various events for each age groups and different purposes</p>
 				<div class="eventswrap">
 					
-					<a href="education.html">
+					<a href="education.php">
 						<div class="cases-link">
                             <img class="edu_prog" src="image/education.jpeg" alt="educational logo">
                         </div>
                         <br>
                         <p class="ev-names">Educational Programs</p>
 					</a>
-					<a href="conserve.html">
+					<a href="conserve.php">
 						<div class="cases-link">
 							<img class="edu_prog" src="image/conserve.png" alt="conserve logo">
 						</div>
                         <br>
                         <p class="ev-names">Conservational <br> Organizaitons</p>
 					</a>
-					<a href="grouptour.html">
+					<a href="grouptour.php">
 						<div class="cases-link">
 							<img class="edu_prog" src="image/tour.jpg" alt="tour logo">
 						</div>
                         <br>
                         <p class="ev-names">Group Tours</p>
 					</a>
-					<a href="birthday.html">
+					<a href="birthday.php">
 						<div class="cases-link">
 							<img class="edu_prog" src="image/birthday.jpg" alt="birthday logo">
 						</div>

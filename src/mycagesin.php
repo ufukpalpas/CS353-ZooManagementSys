@@ -113,7 +113,7 @@ if(isset($_POST['logout'])){
 								<th>". $row['last_care_date'] ."<hr></th>    
 								<th>". $row['feed_time'] ."<hr></th>    
 								<th>". $row['location'] ."<hr></th> 
-								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."reg\"class=\"btn3\" value=\"Regularize Food\"></form><hr></th>  
+								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."reg\" class=\"btn3\" value=\"Regularize Food\"></form><hr></th>  
 								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."select\" class=\"btn3\" value=\"Select\"></form><hr></th>  
 							</tr>";
 						$arr[$i] = $row['cage_id'];
