@@ -361,10 +361,19 @@ header .header-cases {
 }
 
 .gender {
-	margin-top: 25px;
-	padding-bottom: 10px;
+	padding-top: 25px;
 	font-size: 18px;
-	font-weight: 400;
+	font-weight: 600;
+}
+
+.radio {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.lbl{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .register-popup .content label {

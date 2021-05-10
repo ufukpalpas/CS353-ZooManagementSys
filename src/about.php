@@ -15,19 +15,19 @@ function vislogin($mysqli){
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use employee sign in!");
-				window.location = "index.php";
+				window.location = "about.php";
 				</script>';
 			}
 		} else {
 			echo '<script type="text/JavaScript">
 					window.alert("Incorrect username or ID please try again!");
-					window.location = "index.php";
+					window.location = "about.php";
 			</script>';
 		}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "index.php";
+                window.location = "about.php";
             </script>';
     }
 }
@@ -44,7 +44,7 @@ function register($mysqli){
 	if($confpassword != $password){
 		echo '<script type="text/JavaScript">
 		window.alert("Your Passwords do not Match!");
-		window.location = "index.php";
+		window.location = "about.php";
 		</script>';
 		return;
 	}
@@ -59,13 +59,13 @@ function register($mysqli){
 			if($result3 = $mysqli->query($query2)){
 				echo '<script type="text/JavaScript">
 				window.alert("Register Successful!");
-				window.location = "index.php";
+				window.location = "about.php";
 				</script>';
 			}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "index.php";
+                window.location = "about.php";
             </script>';
     }
 }
@@ -84,8 +84,6 @@ if(isset($_POST['register'])){
 		<meta charset = "UTF-8">
 		<link rel="stylesheet" href="style.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 	</head>
 
 	<body>
@@ -103,9 +101,8 @@ if(isset($_POST['register'])){
 				</ul>
 			</nav>
 		</header>
-
 		<main>
-            <div class="login-popup" id="login-popup">
+		<div class="login-popup" id="login-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="togglePopup()">×</div>
@@ -190,41 +187,21 @@ if(isset($_POST['register'])){
         			window.history.replaceState( null, null, window.location.href );
     			}
             </script>
-
-			<section class="cases-links">
-				<div class="wrapper">
-					<!-- Orta kısım -->
-					<div class="main">
-						<div class="main-image"> 
-							<image src="image/lion.png" alt="Lion image" class="lion-image"></image>
-						</div>
-						<div class="second">
-							<h2>Welcome to KasaloZoo</h2>
-							<p>Everything about the zoo and the animals are available online for everyone now!</p>
-						</div>
-					</div>
-
-
-					<div class="owl-carousel owl-theme">
-						<div class="comment">
-							<h5>Walter White</h5>
-							<div class="comment-div">
-								<p class="comment-header">Best zoo in the area!</p>
-								<p class="comment-text">I love KasaloZoo! it is a perfect place for both children and adults...
-									<br> Perfect, visit animals closely...
-								</p>
-								<p class="comment-date">14 APRIL 2018</p>
-							</div>
-						</div>
-						<div class="comment"><h4>2</h4>
-						
-						</div>
-						<div class="comment"><h4>3</h4>
-						
-						</div>
-					</div>
-
-				</div>
+            <section class="mainsec">
+                <h2>About Us</h2>
+                <article>
+                    <h3>Group 33</h3>
+                    <p>
+                        Ufuk Palpas 21702958<br>
+                        Asya Doğa Özer 21803479<br>
+                        Can Kılıç 21703333<br>
+                        Ege Çetin 21802305 <br>
+                    </p>
+                    <p>
+                        Project website: &nbsp;
+                        <a href="http://www.cs353group33.tk">www.cs353group33.tk</a><br>
+                    </p>
+                </article>
 			</section>
 		</main>
 		<div class="wrapper"> <!-- alt kısım -->
@@ -265,25 +242,5 @@ if(isset($_POST['register'])){
 				</div>
 			</footer>
 		</div>
-		<script src="owlcarousel/jquery.min.js"></script>
-		<script src="owlcarousel/owl.carousel.js"></script>
-		<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 	</body>
 </html>

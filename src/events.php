@@ -15,19 +15,19 @@ function vislogin($mysqli){
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use employee sign in!");
-				window.location = "index.php";
+				window.location = "events.php";
 				</script>';
 			}
 		} else {
 			echo '<script type="text/JavaScript">
 					window.alert("Incorrect username or ID please try again!");
-					window.location = "index.php";
+					window.location = "events.php";
 			</script>';
 		}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "index.php";
+                window.location = "events.php";
             </script>';
     }
 }
@@ -44,7 +44,7 @@ function register($mysqli){
 	if($confpassword != $password){
 		echo '<script type="text/JavaScript">
 		window.alert("Your Passwords do not Match!");
-		window.location = "index.php";
+		window.location = "events.php";
 		</script>';
 		return;
 	}
@@ -59,13 +59,13 @@ function register($mysqli){
 			if($result3 = $mysqli->query($query2)){
 				echo '<script type="text/JavaScript">
 				window.alert("Register Successful!");
-				window.location = "index.php";
+				window.location = "events.php";
 				</script>';
 			}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "index.php";
+                window.location = "events.php";
             </script>';
     }
 }
@@ -84,8 +84,6 @@ if(isset($_POST['register'])){
 		<meta charset = "UTF-8">
 		<link rel="stylesheet" href="style.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 	</head>
 
 	<body>
@@ -103,9 +101,8 @@ if(isset($_POST['register'])){
 				</ul>
 			</nav>
 		</header>
-
 		<main>
-            <div class="login-popup" id="login-popup">
+		<div class="login-popup" id="login-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="togglePopup()">×</div>
@@ -190,40 +187,39 @@ if(isset($_POST['register'])){
         			window.history.replaceState( null, null, window.location.href );
     			}
             </script>
-
-			<section class="cases-links">
-				<div class="wrapper">
-					<!-- Orta kısım -->
-					<div class="main">
-						<div class="main-image"> 
-							<image src="image/lion.png" alt="Lion image" class="lion-image"></image>
+			<section class="event-links">
+                <h2>Events</h2>
+                <p>Various events for each age groups and different purposes</p>
+				<div class="eventswrap">
+					
+					<a href="education.html">
+						<div class="cases-link">
+                            <img class="edu_prog" src="image/education.jpeg" alt="educational logo">
+                        </div>
+                        <br>
+                        <p class="ev-names">Educational Programs</p>
+					</a>
+					<a href="conserve.html">
+						<div class="cases-link">
+							<img class="edu_prog" src="image/conserve.png" alt="conserve logo">
 						</div>
-						<div class="second">
-							<h2>Welcome to KasaloZoo</h2>
-							<p>Everything about the zoo and the animals are available online for everyone now!</p>
+                        <br>
+                        <p class="ev-names">Conservational <br> Organizaitons</p>
+					</a>
+					<a href="grouptour.html">
+						<div class="cases-link">
+							<img class="edu_prog" src="image/tour.jpg" alt="tour logo">
 						</div>
-					</div>
-
-
-					<div class="owl-carousel owl-theme">
-						<div class="comment">
-							<h5>Walter White</h5>
-							<div class="comment-div">
-								<p class="comment-header">Best zoo in the area!</p>
-								<p class="comment-text">I love KasaloZoo! it is a perfect place for both children and adults...
-									<br> Perfect, visit animals closely...
-								</p>
-								<p class="comment-date">14 APRIL 2018</p>
-							</div>
+                        <br>
+                        <p class="ev-names">Group Tours</p>
+					</a>
+					<a href="birthday.html">
+						<div class="cases-link">
+							<img class="edu_prog" src="image/birthday.jpg" alt="birthday logo">
 						</div>
-						<div class="comment"><h4>2</h4>
-						
-						</div>
-						<div class="comment"><h4>3</h4>
-						
-						</div>
-					</div>
-
+                        <br>
+                        <p class="ev-names">Animal Birthdays</p>
+					</a>
 				</div>
 			</section>
 		</main>
@@ -265,25 +261,5 @@ if(isset($_POST['register'])){
 				</div>
 			</footer>
 		</div>
-		<script src="owlcarousel/jquery.min.js"></script>
-		<script src="owlcarousel/owl.carousel.js"></script>
-		<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 	</body>
 </html>
