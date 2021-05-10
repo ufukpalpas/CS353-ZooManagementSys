@@ -90,10 +90,10 @@ if(isset($_POST['logout'])){
 				<div style=\"width:87%; height:87%; background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px;\">
             	<hr style=\"margin-left: 20px; margin-right: 20px;\">";
 				
-				/*$query = 
+				$query = 
 				"select *
-				 from cage c, assigned a
-				 where a.keep_id = \"". $userid ."\" and c.cage_id = a.cage_id;";*/
+				 from animal
+				 where cage_id = $cageid;";
 				echo "<table style=\"width:90%; margin-top: 10px; margin-left: 60px; margin-right: 10px;\">";
 				echo "<tr class=\"toptable\">
 						<th class=\"thtitle\">Animal ID<hr></th>    
@@ -112,7 +112,7 @@ if(isset($_POST['logout'])){
                         <th class=\"thtitle\">Treatment<hr></th> 
 						<th class=\"thtitle\">Training<hr></th>  
 					</tr>";
-				/*if($result = $mysqli->query($query)){
+				if($result = $mysqli->query($query)){
 					while(($row = $result->fetch_assoc())!= null)  {
 						echo "<tr>
 								<th>". $row['animal_id'] ."<hr></th>    
@@ -134,7 +134,7 @@ if(isset($_POST['logout'])){
 					}
 				} else {
 					echo "Error while retrieving animal table. Error: " . mysqli_error($mysqli);
-				}*/
+				}
 				echo "</table>";
 				?>
 				</div>
