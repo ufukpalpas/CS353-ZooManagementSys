@@ -257,6 +257,31 @@ header nav ul li a{
 	font-size: 16px;
 }
 
+/* tables */
+
+.btn3{
+	color: #fff;
+	text-decoration: none;
+	background-color: #404040; 
+	border-radius: 4px;
+	display: inline-block;
+	border: none;
+	text-align: center;
+	transition: all 0.4s ease 0s;
+	width: fit-content;
+	font-size: 16px;
+	height: 20px;
+}
+
+.toptable{
+	font-size: 22px;
+}
+
+th{
+	font-size: 20px;
+}
+
+
 /*hw4 part*/
 /*
 .btn {

@@ -11,10 +11,10 @@ function vislogin($mysqli){
 		if($result->num_rows == 1){
 			if($result1->num_rows == 1){
 				$_SESSION['login_user'] = $userid;
-				//header("location: grouptour.html");
+				header("location: mycagesin.php");
 			} else {
 				echo '<script type="text/JavaScript">
-				window.alert("Please use employee sign in!");
+				window.alert("Please use employee login!");
 				window.location = "index.php";
 				</script>';
 			}
@@ -22,7 +22,7 @@ function vislogin($mysqli){
 			echo '<script type="text/JavaScript">
 					window.alert("Incorrect username or ID please try again!");
 					window.location = "index.php";
-			</script>';
+					</script>';
 		}
     } else {
         echo '<script type="text/JavaScript">
@@ -69,11 +69,61 @@ function register($mysqli){
             </script>';
     }
 }
+function emplogin($mysqli){
+	$userid = $_POST['empuserid'];
+    $password = $_POST['emppass'];
+	echo $userid;
+	$query = " select user_id, password from user where user_id=\"$userid\" and password=\"$password\"";
+	$query1 = " select user_id from keeper where user_id=\"$userid\"";
+	$query2 = " select user_id from veterinarian where user_id=\"$userid\"";
+	$query3 = " select user_id from coordinator where user_id=\"$userid\"";
+	$query4 = " select user_id from guide where user_id=\"$userid\"";
+    if($result = $mysqli->query($query)) {
+		if($result->num_rows == 1){
+			$result1 = $result = $mysqli->query($query1);
+			$result2 = $result = $mysqli->query($query2);
+			$result3 = $result = $mysqli->query($query3);
+			$result4 = $result = $mysqli->query($query4);
+
+			if($result1->num_rows == 1){ //keeper
+				$_SESSION['login_user'] = $userid;
+				header("location: mycagesin.php");
+			} else if($result2->num_rows == 1){ //vet
+				$_SESSION['login_user'] = $userid;
+				header("location: mycagesin.php");
+			} else if($result3->num_rows == 1){ //coordinator
+				$_SESSION['login_user'] = $userid;
+				header("location: mycagesin.php");
+			} else if($result4->num_rows == 1){ //guide
+				$_SESSION['login_user'] = $userid;
+				header("location: mycagesin.php");
+			} else {
+				echo '<script type="text/JavaScript">
+				window.alert("Please use visitor login!");
+				window.location = "index.php";
+				</script>';
+			}
+		} else {
+			echo '<script type="text/JavaScript">
+					window.alert("Incorrect username or ID please try again!");
+					window.location = "index.php";
+			</script>';
+		}
+    } else {
+        echo '<script type="text/JavaScript">
+                window.alert("Query operation failed!");
+                window.location = "index.php";
+            </script>';
+    }
+}
 if(isset($_POST['vislogin'])){
     vislogin($mysqli);
 }
 if(isset($_POST['register'])){
 	register($mysqli);
+}
+if(isset($_POST['emploginn'])){
+	emplogin($mysqli);
 }
 ?>
 
@@ -125,8 +175,8 @@ if(isset($_POST['register'])){
 						<div class="loginPanel">
 							<form method = "post">
 								<input name="empuserid" class="id" type="id" name="id" placeholder="User ID (employee)" required="required">
-								<input name="emppassword" class="pass" type="password" name="pass" placeholder="Password" required="required">
-								<button class="btn" name="emplogin">Sign In</button>
+								<input name="emppass" class="pass" type="password" name="pass" placeholder="Password" required="required">
+								<button class="btn" name="emploginn">Sign In</button>
 							</form>
 						</div>
 					</div>
