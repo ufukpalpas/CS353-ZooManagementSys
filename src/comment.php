@@ -37,6 +37,7 @@ if(isset($_POST['comment_form'])) {
     $check_query = "SELECT event_id FROM comment WHERE event_id =". $event_option;
     $check_query = $mysqli -> query($check_query);
     console_log(mysqli_fetch_row($check_query)[0]);
+
     if(mysqli_fetch_row($check_query)[0] != NULL){
         echo "<script type='text/javascript'>
          alert('You already made a comment !! ');
