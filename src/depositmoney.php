@@ -29,7 +29,7 @@ if(isset($_POST['logout'])){
 
 if(isset($_POST['deposit'])){
     $damount = $_POST['amount'];
-    $depositquery = "update visitor set money = money + $damount;";
+    $depositquery = "update visitor set money = money + $damount where user_id = $userid;";
     if($dresult = $mysqli->query($depositquery)){
         echo '<script type="text/JavaScript">
         window.alert("Money Deposited Successfully!");
