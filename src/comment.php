@@ -36,7 +36,6 @@ if(isset($_POST['comment_form'])) {
     $user_i = mysqli_fetch_row($user_i)[0];
     $check_query = "SELECT event_id FROM comment WHERE event_id =". $event_option;
     $check_query = $mysqli -> query($check_query);
-    console_log(mysqli_fetch_row($check_query)[0]);
 
     if(mysqli_fetch_row($check_query)[0] != NULL){
         echo "<script type='text/javascript'>
