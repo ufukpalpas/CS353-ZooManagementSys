@@ -285,97 +285,35 @@ th{
 	color: #3db7cc;
 }
 
-/*hw4 part*/
-/*
-.btn {
-	color: #fff;
-	text-decoration: none;
-	background: #6eb6de; 
-	border-radius: 4px;
-	display: inline-block;
-	border: none;
-	text-align: center;
-	transition: all 0.4s ease 0s;
-	width: 320px;
-	height: 40px;
-}
-.btn2 {
-	color: #fff;
-	text-decoration: none;
-	background: #6eb6de; 
-	border-radius: 4px;
-	display: inline-block;
-	border: none;
-	text-align: center;
-	transition: all 0.4s ease 0s;
-	width: 80px;
-	height: 40px;
-	right:auto;
-	position: absolute;
-	margin-left: 74%;
-	margin-top: 20px;
-	margin-right: 40px;
-}
-tr {
-	border: 1px solid black;
-	border-collapse: collapse;
-	font-size: 22px;
-}
-.toptable {
-	color:Blue;
-}
-
-.btn3{
-	color: #fff;
-	text-decoration: none;
-	background: #6eb6de; 
-	border-radius: 4px;
-	display: inline-block;
-	border: none;
-	text-align: center;
-	transition: all 0.4s ease 0s;
-	width: 100px;
-	height: 36px;
-}
-
-.btn4{
-	color: #fff;
-	text-decoration: none;
-	background: #6eb6de; 
-	border-radius: 4px;
-	display: inline-block;
-	border: none;
-	text-align: center;
-	transition: all 0.4s ease 0s;
-	width: 320px;
-	height: 40px;
-	margin-left: 40%;
-	margin-top: 450px;
-}
-
-.submitTXT {    
-	margin-left: 60px; 
-	border: none;
-	outline: none;
-	padding: 10px;
-	font-size: 13px;
-	color: #000;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	border: 1px solid rgba(0,0,0,0.3);
-	border-radius: 4px;
-	box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
-	-webkit-transition: box-shadow .5s ease;
-	-moz-transition: box-shadow .5s ease;
-	-o-transition: box-shadow .5s ease;
-	-ms-transition: box-shadow .5s ease;
-	transition: box-shadow .5s ease;
-}*/
-/*hw4 end*/
 
 /* other */
 
 .main-image {
 	width: max-content;
+}
+
+.ini{
+	width: 45%;
+	padding: 12px 20px;
+	margin: 15px auto;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+}
+
+.btndepo{
+	width: 45%;
+	background-color: #404040;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	margin: 15px auto;
+	margin-bottom: 8%;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	display: flex;
+	justify-content: center;
 }
 
 .lion-image {
