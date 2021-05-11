@@ -11,7 +11,6 @@ if($_SESSION['login_user'])
         $typearr = mysqli_query($mysqli, $typequery);
         $fetcharr = mysqli_fetch_array($typearr, MYSQLI_ASSOC);
         $type = $fetcharr['discount_type'];
-
     }
 } else {
     header("location: grouptour.php");
