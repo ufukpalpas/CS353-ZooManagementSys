@@ -87,7 +87,7 @@ if(isset($_POST['logout'])){
             </script>
             <section class="mainsec">
                 <h2>Make Donation to Conservation Organizations</h2>
-				<div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
+				<div style="width:75%; height:fit-content;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; ">
             	<hr style="margin-left: 20px; margin-right: 20px;">
 				<?php
 				$query = 
@@ -165,6 +165,40 @@ if(isset($_POST['logout'])){
 				}
 				?>
 				</div>
+                <h2>My Past Donations</h2>
+				<div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
+            	<hr style="margin-left: 20px; margin-right: 20px;">
+				<?php
+				$queryshow = 
+				"select d.event_id, d.amount, c.name, c.fundings, e.start_date
+				 from conservation_organization c, event e, donation d
+                 where d.user_id = $userid and e.event_id = c.event_id and c.event_id = d.event_id;";
+
+				echo "<table style=\"width:90%; margin-top: 10px; margin-left: 60px; margin-right: 10px;\">";
+				echo "<tr class=\"toptable\">
+						<th class=\"thtitle\">No<hr></th>    
+						<th class=\"thtitle\">Conservational Organization Name<hr></th>    
+						<th class=\"thtitle\">Start Date<hr></th>    
+						<th class=\"thtitle\">Fundings<hr></th>   
+                        <th class=\"thtitle\">Amount<hr></th>   
+					</tr>";
+				if($result5 = $mysqli->query($queryshow)){
+					while(($row2 = $result5->fetch_assoc())!= null)  {
+						echo "<form method=\"post\"><tr>
+								<th>". $row2['event_id'] ."<hr></th>    
+								<th>". $row2['name'] ."<hr></th>    
+								<th>". $row2['start_date'] ."<hr></th>    
+								<th>". $row2['fundings'] ."<hr></th>    
+                                <th>". $row2['amount'] ."<hr></th>     
+							</tr></form>";
+					}
+				} else {
+					echo "Error while retrieving doantion table. Error: " . mysqli_error($mysqli);
+				}
+				echo "</table>";
+				?>
+				</div>
+
 			</section>
 		</main>
 		<div class="wrapper"> <!-- alt kısım -->
