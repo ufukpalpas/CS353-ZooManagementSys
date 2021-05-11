@@ -230,13 +230,6 @@ if(isset($_POST['logout'])){
 				echo "</table>";
 				?>
 				</div>
-
-
-
-
-
-
-
 			</section>
 		</main>
 		<div class="wrapper"> <!-- alt kısım -->

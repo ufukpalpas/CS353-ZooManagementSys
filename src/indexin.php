@@ -60,7 +60,6 @@ if(isset($_POST['logout'])){
                     <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
                     </a></li>";
                     ?>
-                    
 				</ul>
 			</nav>
 		</header>
