@@ -1,7 +1,6 @@
 <?php
 include("config.php");
 session_start();
-
 function vislogin($mysqli){
 	$userid = $_POST['userid'];
     $password = $_POST['password'];
@@ -11,25 +10,24 @@ function vislogin($mysqli){
     if(($result = $mysqli->query($query)) && ($result1 = $mysqli->query($query1))) {
 		if($result->num_rows == 1){
 			if($result1->num_rows == 1){
-				$_SESSION['login_user'] = $userid;
 				$_SESSION['type'] = "visitor";
 				header("location: indexin.php");
 			} else {
 				echo '<script type="text/JavaScript">
-				window.alert("Please use employee login!");
-				window.location = "index.php";
+				window.alert("Please use employee sign in!");
+				window.location = "grouptour.php";
 				</script>';
 			}
 		} else {
 			echo '<script type="text/JavaScript">
 					window.alert("Incorrect username or ID please try again!");
-					window.location = "index.php";
-					</script>';
+					window.location = "grouptour.php";
+			</script>';
 		}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "index.php";
+                window.location = "grouptour.php";
             </script>';
     }
 }
@@ -46,7 +44,7 @@ function register($mysqli){
 	if($confpassword != $password){
 		echo '<script type="text/JavaScript">
 		window.alert("Your Passwords do not Match!");
-		window.location = "index.php";
+		window.location = "grouptour.php";
 		</script>';
 		return;
 	}
@@ -61,13 +59,13 @@ function register($mysqli){
 			if($result3 = $mysqli->query($query2)){
 				echo '<script type="text/JavaScript">
 				window.alert("Register Successful!");
-				window.location = "index.php";
+				window.location = "grouptour.php";
 				</script>';
 			}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "index.php";
+                window.location = "grouptour.php";
             </script>';
     }
 }
@@ -140,8 +138,6 @@ if(isset($_POST['emploginn'])){
 		<meta charset = "UTF-8">
 		<link rel="stylesheet" href="style.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 	</head>
 
 	<body>
@@ -159,9 +155,8 @@ if(isset($_POST['emploginn'])){
 				</ul>
 			</nav>
 		</header>
-
 		<main>
-            <div class="login-popup" id="login-popup">
+		<div class="login-popup" id="login-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="togglePopup()">×</div>
@@ -246,41 +241,19 @@ if(isset($_POST['emploginn'])){
         			window.history.replaceState( null, null, window.location.href );
     			}
             </script>
-
-			<section class="cases-links">
-				<div class="wrapper">
-					<!-- Orta kısım -->
-					<div class="main">
-						<div class="main-image"> 
-							<image src="image/lion.png" alt="Lion image" class="lion-image"></image>
-						</div>
-						<div class="second">
-							<h2>Welcome to KasaloZoo</h2>
-							<p>Everything about the zoo and the animals are available online for everyone now!</p>
-						</div>
-					</div>
-
-
-					<div class="owl-carousel owl-theme">
-						<div class="comment">
-							<h5>Walter White</h5>
-							<div class="comment-div">
-								<p class="comment-header">Best zoo in the area!</p>
-								<p class="comment-text">I love KasaloZoo! it is a perfect place for both children and adults...
-									<br> Perfect, visit animals closely...
-								</p>
-								<p class="comment-date">14 APRIL 2018</p>
-							</div>
-						</div>
-						<div class="comment"><h4>2</h4>
-						
-						</div>
-						<div class="comment"><h4>3</h4>
-						
-						</div>
-					</div>
-
+            <section class="mainsec">
+                <h2>Group Tours</h2>
+				<div class="picdiv">
+					<img class="mainpic" src="image/zootour.jpg" alt="zoo tour foto">
 				</div>
+                <article>
+                    <h3>Don't you want to join our guided group tours!</h3>
+                    <p>
+                        You can join our guided group tours. You can enjoy and learn by paying reasonable prices. <br>
+                        Learn about their life... <br>
+                        To book your place in the group tour Sign Up or Sign In now....
+                    </p>
+                </article>
 			</section>
 		</main>
 		<div class="wrapper"> <!-- alt kısım -->
@@ -321,25 +294,5 @@ if(isset($_POST['emploginn'])){
 				</div>
 			</footer>
 		</div>
-		<script src="owlcarousel/jquery.min.js"></script>
-		<script src="owlcarousel/owl.carousel.js"></script>
-		<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 	</body>
 </html>
