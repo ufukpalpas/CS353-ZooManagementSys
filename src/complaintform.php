@@ -32,7 +32,7 @@ if(isset($_POST['complaint_form'])) {
         }
         .table{
             border-collapse: collapse;
-            border : 0.5px solid black; 
+            border : 0.5px solid gray; 
             font: 18px helvetica;
             text-align: center;
             width : 100%;
@@ -40,8 +40,8 @@ if(isset($_POST['complaint_form'])) {
         }
         .tabl{
             border-collapse: collapse;
-            border-top : 0.5px solid black; 
-            border-bottom : 0.5px solid black; 
+            border-top : 0.5px solid gray; 
+            border-bottom : 0.5px solid gray; 
             font: 18px helvetica;
             text-align: center;
             width : 25%;
@@ -53,13 +53,19 @@ if(isset($_POST['complaint_form'])) {
         }
         .complaint_btn{
             margin-left: 80%;
-            margin-top: -10%;
+            margin-top: -30%;
             width : 20%;
             height : 190px;
+            background-color : #3db7cc;
+            cursor: pointer;
+            font: 18px helvetica;
+            border-radius: 20px;
         }
         .complaint_txt{ 
-            width : 40%;
+            width : 75%;
             height : 40px;
+            border-radius: 5px;
+            border : 1px solid gray;
         }
         .text_field{
             padding-top : 40px;
@@ -125,19 +131,19 @@ if(isset($_POST['complaint_form'])) {
                 $result = $mysqli -> query($query);
                 echo "<table class='table' >"; 
                 echo "<tr>";    
-                echo  "<td class='tabl' ><b>No</b></td>";
-                echo  "<td class='tabl' ><b>Date</b></td>";
-                echo  "<td class='tabl' ><b>Complaint Status</b></td>";
+                echo  "<td class='tabl' style='color: #3db7cc;' ><b>No</b></td>";
+                echo  "<td class='tabl' style='color: #3db7cc;' ><b>Date</b></td>";
+                echo  "<td class='tabl' style='color: #3db7cc;' ><b>Complaint Status</b></td>";
                 echo "</tr>";
                 while ($row = $result -> fetch_row()) {
                     echo "<tr>";
                     echo  "<td class='tabl'>".$row[0]."</td>";
                     echo  "<td class='tabl'>".$row[2]."</td>";
                     if($row[6]){
-                        echo  "<td class='tabl'>"."<img class='image' src='image/tick.png'"."</td>";
+                        echo  "<td class='tabl' style='padding-top:10px;'>"."<img class='image' style='height : 25px; width : 27px;' src='image/tick.png'"."</td>";
                     }
                     else{
-                        echo  "<td class='tabl'>"."<img class='image' src='image/cross.png'"."</td>";
+                        echo  "<td class='tabl' style='padding-top:10px;'>"."<img class='image' src='image/cross.png'"."</td>";
                     }
                     echo "</tr>";
                 }
