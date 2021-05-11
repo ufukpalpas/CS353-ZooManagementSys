@@ -200,7 +200,7 @@ header nav ul li a{
     transform:translate(-50%,-50%) scale(0);
     background:#fff;
     width:25%;
-    height:75%;
+    height:fit-content;
     z-index:2;
     text-align:center;
     border: 2px solid gray;
@@ -254,6 +254,19 @@ header nav ul li a{
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
+	font-size: 16px;
+}
+
+.conservebtn {
+	width: 25%;
+	background-color: #404040;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	margin-left: 37%;
+	margin-bottom: 10%;
+	text-align: center;
+	text-decoration: none;
 	font-size: 16px;
 }
 

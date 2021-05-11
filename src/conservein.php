@@ -5,6 +5,7 @@ if($_SESSION['login_user'])
 {
     $userid = $_SESSION['login_user']; 
     $name = $_SESSION['name'];
+	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
         $money = $_SESSION['money'];
     }
@@ -16,6 +17,11 @@ if(isset($_POST['logout'])){
     session_unset(); 
     session_destroy(); 
     header("location: conserve.php");
+    exit;
+}
+
+if(isset($_POST['conservebtn'])){
+    header("location: makedonation.php");
     exit;
 }
 ?>
@@ -46,9 +52,10 @@ if(isset($_POST['logout'])){
                         </a>
                     </li>";
                     
-                    echo "<li><a href=\"#\">$money
-                    <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
-                    </a></li>";
+                    if($usertype == "visitor")
+						echo "<li><a href=\"#\">$money
+						<img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
+						</a></li>";
                     ?>
                     
 				</ul>
@@ -73,11 +80,100 @@ if(isset($_POST['logout'])){
                     </form>
                 </div>
             </div>
-            <script>
-				function toggleuserPopup(){
-                    document.getElementById("user-popup").classList.toggle("activate");
-                }
-            </script>
+            <div class="user-popup" id="coor-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">Cage Management</button>
+                        <button class="btn">Create Event</button>
+                        <button class="btn">Respond to Complaint Forms</button>
+                        <button class="btn">Management</button>
+                        <button class="btn">Register a New Employee</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<div class="user-popup" id="keep-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">My Cages</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<div class="user-popup" id="guide-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">My Tours</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<div class="user-popup" id="vet-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">Treatments</button>
+						<button class="btn">Invitations</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<?php
+				if($usertype == "visitor"){
+					echo "<script>
+						function toggleuserPopup(){
+							document.getElementById(\"user-popup\").classList.toggle(\"activate\");
+						}
+					</script>";
+				} else if($usertype == "keeper") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"keep-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				} else if($usertype == "vet") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"vet-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				} else if($usertype == "coor") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"coor-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				} else if($usertype == "guide") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"guide-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				}
+			?>
             <section class="mainsec">
                 <h2>Conservation Organizations</h2>
 				<div class="picdiv">
@@ -86,12 +182,17 @@ if(isset($_POST['logout'])){
                 <article>
                     <h3>KasaloZoo supports many conservational organization!</h3>
                     <p>
-                        You can reach many conservational organizaition KasaloZoo.<br>
+                        You can reach many conservation organizaitions KasaloZoo.<br>
                         You can make donations and save lives... <br>
-                        For more information and to make donation Sign Up or Sign In now....
+						To see conservation organizations and donate:
                     </p>
-                </article>
+					<form method = "post">
+						<button name="conservebtn" class="conservebtn">List Conservation Organizations</button>
+					</form>
+				</article>
+				
 			</section>
+			
 		</main>
 		<div class="wrapper"> <!-- alt kısım -->
 			<footer>

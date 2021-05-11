@@ -4,13 +4,10 @@ session_start();
 if($_SESSION['login_user']) 
 {
     $userid = $_SESSION['login_user']; 
-    $namequery = "select name from user where user_id ='". $userid ."'"; 
-    $namearr = mysqli_query($mysqli, $namequery);
-    $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-    $name = $fetcharr['name'];
-    $_SESSION['name'] = $name;
+    $name = $_SESSION['name'];
+	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
-        $moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+		$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
         $moneyarr = mysqli_query($mysqli, $moneyquery);
         $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
         $money = $fetchmarr['money'];
@@ -53,10 +50,10 @@ if(isset($_POST['logout'])){
                         <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
                     </li>";
-                    
-                    echo "<li><a href=\"#\">$money
-                    <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
-                    </a></li>";
+					if($usertype == "visitor")
+						echo "<li><a href=\"#\">$money
+						<img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
+						</a></li>";
                     ?>
 				</ul>
 			</nav>
@@ -113,10 +110,13 @@ if(isset($_POST['logout'])){
 								<th>". $row['event_id'] ."<hr></th>    
 								<th>". $row['name'] ."<hr></th>    
 								<th>". $row['start_date'] ."<hr></th>    
-								<th>". $row['fundings'] ."<hr></th>    
-								<th><input name=\"mamount\" class=\"left\" type=\"text\" placeholder=\"Donation Amount\" required=\"required\"><hr></th>  
-								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."\" class=\"btn3\" value=\"Select\"></form><hr></th>  
-							</tr></form>";
+								<th>". $row['fundings'] ."<hr></th>";
+						if($usertype == "visitor")
+							echo		"<th><input name=\"mamount\" class=\"left\" type=\"text\" placeholder=\"Donation Amount\" required=\"required\"><hr></th>  
+									<th><form method=\"post\"><input type=\"submit\" name=\"".$i."\" class=\"btn3\" value=\"Select\"></form><hr></th>  
+								</tr></form>";
+						else
+							echo		"</tr>";
 						$arr[$i] = $row['event_id'];
                         $arr2[$i] = $row['user_id'];
 						$i = $i + 1;

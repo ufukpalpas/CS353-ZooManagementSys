@@ -11,7 +11,19 @@ function vislogin($mysqli){
 		if($result->num_rows == 1){
 			if($result1->num_rows == 1){
 				$_SESSION['type'] = "visitor";
-				header("location: indexin.php");
+
+				$namequery = "select name from user where user_id ='". $userid ."'"; 
+				$namearr = mysqli_query($mysqli, $namequery);
+				$fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
+				$name = $fetcharr['name'];
+				$_SESSION['name'] = $name;
+
+				$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+				$moneyarr = mysqli_query($mysqli, $moneyquery);
+				$fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+				$money = $fetchmarr['money'];
+				$_SESSION['money'] = $money;
+				header("location: conservein.php");
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use employee sign in!");
@@ -88,35 +100,55 @@ function emplogin($mysqli){
 			if($result1->num_rows == 1){ //keeper
 				$_SESSION['login_user'] = $userid;
 				$_SESSION['type'] = "keeper";
-				header("location: indexin.php");
+				$namequery = "select name from user where user_id ='". $userid ."'"; 
+				$namearr = mysqli_query($mysqli, $namequery);
+				$fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
+				$name = $fetcharr['name'];
+				$_SESSION['name'] = $name;
+				header("location: conservein.php");
 			} else if($result2->num_rows == 1){ //vet
 				$_SESSION['login_user'] = $userid;
 				$_SESSION['type'] = "vet";
-				header("location: indexin.php");
+				$namequery = "select name from user where user_id ='". $userid ."'"; 
+				$namearr = mysqli_query($mysqli, $namequery);
+				$fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
+				$name = $fetcharr['name'];
+				$_SESSION['name'] = $name;
+				header("location: conservein.php");
 			} else if($result3->num_rows == 1){ //coordinator
 				$_SESSION['login_user'] = $userid;
 				$_SESSION['type'] = "coor";
-				header("location: indexin.php");
+				$namequery = "select name from user where user_id ='". $userid ."'"; 
+				$namearr = mysqli_query($mysqli, $namequery);
+				$fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
+				$name = $fetcharr['name'];
+				$_SESSION['name'] = $name;
+				header("location: conservein.php");
 			} else if($result4->num_rows == 1){ //guide
 				$_SESSION['login_user'] = $userid;
 				$_SESSION['type'] = "guide";
-				header("location: indexin.php");
+				$namequery = "select name from user where user_id ='". $userid ."'"; 
+				$namearr = mysqli_query($mysqli, $namequery);
+				$fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
+				$name = $fetcharr['name'];
+				$_SESSION['name'] = $name;
+				header("location: conservein.php");
 			} else {
 				echo '<script type="text/JavaScript">
 				window.alert("Please use visitor login!");
-				window.location = "index.php";
+				window.location = "conserve.php";
 				</script>';
 			}
 		} else {
 			echo '<script type="text/JavaScript">
 					window.alert("Incorrect username or ID please try again!");
-					window.location = "index.php";
+					window.location = "conserve.php";
 			</script>';
 		}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "index.php";
+                window.location = "conserve.php";
             </script>';
     }
 }

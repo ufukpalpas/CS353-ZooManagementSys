@@ -1,20 +1,10 @@
 <?php
 include("config.php");
 session_start();
-if($_SESSION['login_user']) // değişecek
+if($_SESSION['login_user'] && $_SESSION['type'] = "coor") 
 {
-    $userid = $_SESSION['login_user']; // değişecek
-    $namequery = "select name from user where user_id ='". $userid ."'"; //session name e kadarlık kısım indexin.html e alınacak buraya sessiondan çekme gelecek
-    $namearr = mysqli_query($mysqli, $namequery);
-    $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-    $name = $fetcharr['name'];
-    $_SESSION['name'] = $name;
-
-    $moneyquery = "select money from visitor where user_id ='". $userid ."'"; //session name e kadarlık kısım indexin.html e alınacak buraya sessiondan çekme gelecek
-    $moneyarr = mysqli_query($mysqli, $moneyquery);// yanlızca visitor
-    $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
-    $money = $fetchmarr['money'];
-    $_SESSION['money'] = $money;
+    $userid = $_SESSION['login_user']; 
+	$name = $_SESSION['name'];
 } else {
     header("location: index.php");
 }
@@ -185,16 +175,12 @@ if(isset($_POST['create4'])){
                         <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
                     </li>";
-                    
-                    echo "<li><a href=\"#\">$money
-                    <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
-                    </a></li>";
                     ?>
 				</ul>
 			</nav>
 		</header>
 		<main>
-            <div class="user-popup" id="user-popup">
+            <div class="user-popup" id="coor-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
@@ -202,19 +188,18 @@ if(isset($_POST['create4'])){
                     <form method = "post">
                         <button class="btn">View Profile</button>
                         <button class="btn">Edit Profile</button>
-                        <button class="btn">Deposit Money</button>
-                        <button class="btn">Make Donation</button>
-                        <button class="btn">Create Complaint Form</button>
-                        <button class="btn">My Events</button>
-                        <button class="btn">Join a Group Tour</button>
-                        <button class="btn">Join a Endangered Birthday</button>
+                        <button class="btn">Cage Management</button>
+                        <button class="btn">Create Event</button>
+                        <button class="btn">Respond to Complaint Forms</button>
+                        <button class="btn">Management</button>
+                        <button class="btn">Register a New Employee</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
             </div>
             <script>
 				function toggleuserPopup(){
-                    document.getElementById("user-popup").classList.toggle("activate");
+                    document.getElementById("coor-popup").classList.toggle("activate");
                 }
             </script>
             <section class="mainsec">
