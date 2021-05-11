@@ -34,20 +34,18 @@ if(isset($_POST['logout'])){
 		<meta charset = "UTF-8">
 		<link rel="stylesheet" href="loginstyle.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 	</head>
 
 	<body>
 		<header>
-			<a href="index.html" class="header-brand">KasaloZoo</a>
+			<a href="indexin.html" class="header-brand">KasaloZoo</a>
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
-					<li><a href="index.html">Main Page</a></li>
-					<li><a href="animals.html">Animals</a></li>
-					<li><a href="events.html">Events</a></li>
-					<li><a href="about.html">About Zoo</a></li>
+					<li><a href="indexin.html">Main Page</a></li>
+					<li><a href="animalsin.html">Animals</a></li>
+					<li><a href="eventsin.html">Events</a></li>
+					<li><a href="aboutin.html">About Zoo</a></li>
                     <li>
                         <a href="#" onclick="toggleuserPopup()">Hello "username" ("user_id")
                         <img class="down" src="image/user.png" alt="user logo">
@@ -168,10 +166,10 @@ if(isset($_POST['logout'])){
 				<div class="footer-links">
 					<h5>CATEGORIES</h5>
 					<ul class="footer-links-first">
-						<li><a href="index.html">Main Page</a></li>
-						<li><a href="animals.html">Animals</a></li>
-						<li><a href="events.html">Events</a></li>
-						<li><a href="about.html">About Zoo</a></li>
+						<li><a href="indexin.html">Main Page</a></li>
+						<li><a href="animalsin.html">Animals</a></li>
+						<li><a href="eventsin.html">Events</a></li>
+						<li><a href="aboutin.html">About Zoo</a></li>
 					</ul>
 				</div>
 				<div class="partner-list">
@@ -181,25 +179,5 @@ if(isset($_POST['logout'])){
 				</div>
 			</footer>
 		</div>
-		<script src="owlcarousel/jquery.min.js"></script>
-		<script src="owlcarousel/owl.carousel.js"></script>
-		<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 	</body>
 </html>
