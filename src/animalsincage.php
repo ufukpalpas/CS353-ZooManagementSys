@@ -61,9 +61,43 @@ if(isset($_POST['logout'])){
                     </form>
                 </div>
             </div>
+
+            <div class="treatment-popup" id="treatment-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleTRPopup()">×</div>
+					<p class="h2pop">Request Treatment</p>
+					<form method = "post">
+						<input name="findings" class="tff" type="text" placeholder="Findings" required="required">
+						<select name="vets" id="vets" class="tf3" >
+						<?php
+							$queryvet = "select v.user_id, u.name from veterinarian v, user u where u.user_id = v.user_id;";
+							if($result = $mysqli->query($queryvet)){
+								$first = 0;
+								while(($row = $result->fetch_assoc())!= null)  {
+									$first++;
+									if($first == 1)
+										echo "<option selected=\"selected\" value=\"".$row['user_id']."\">".$row['name']." (".$row['user_id'].")</option>";   
+									else
+										echo "<option value=\"".$row['user_id']."\">".$row['name']." (".$row['user_id'].")</option>";   
+								}
+							} else {
+								echo "Error while retrieving cage table. Error: " . mysqli_error($mysqli);
+							}
+						?>
+                		</select>				
+						<button name="treatbtn" class="btn">Request Treatment</button>
+					</form>
+                </div>
+            </div>
+
             <script>
 				function toggleuserPopup(){
                     document.getElementById("keep-popup").classList.toggle("activate");
+                }
+
+				function toggleTRPopup(){
+                    document.getElementById("treatment-popup").classList.toggle("activate");
                 }
             </script>
             <section class="mainsec">
@@ -128,7 +162,10 @@ if(isset($_POST['logout'])){
 						$place = strval($k) . "req";
 						$place2 = strval($k) . "tra";
 						if(isset($_POST[$place])){ //Request Treatment
-                            //Request Treatment----------------------------------------------------------
+							$_SESSION['animalid'] = $arr[$k];
+							echo '<script type="text/JavaScript">
+								toggleTRPopup();
+								</script>';
 							break;
 						}
 						if(isset($_POST[$place2])){//Training Information
@@ -136,6 +173,32 @@ if(isset($_POST['logout'])){
 							echo '<script type="text/javascript">location.href = "traininginfo.php";</script>';
 							break;
 						}
+					}
+				}
+
+				if(isset($_POST['treatbtn'])){
+					$animalid= $_SESSION['animalid'];
+					$findings = $_POST['findings'];
+					$vets = $_POST['vets'];
+					$querytr = "insert into treatment_request(vet_id, findings) values($vets, \"$findings\");";
+					if($resulttr = $mysqli->query($querytr)) {
+						$last_id = $mysqli->insert_id;
+						$queryreq = "insert into request(animal_id, request_id, user_id) values($animalid, $last_id, $userid);";
+						if($resultreq = $mysqli->query($queryreq)) {
+							echo '<script type="text/JavaScript">
+							window.alert("Treatment request has sent to the veterinerian!");
+							 </script>';
+						} else {
+							echo '<script type="text/JavaScript">
+							window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
+							window.location = "mycagesin.php";
+							 </script>';
+						}
+					}else{
+						echo '<script type="text/JavaScript">
+						window.alert("Query operation failed!'.mysqli_error($mysqli).'");
+						window.location = "mycagesin.php";
+						 </script>';
 					}
 				}
 				?>
