@@ -312,6 +312,24 @@ header nav ul li a{
 }
 
 /* tables */
+.btntra{
+	width: 25%;
+	padding: 12px 20px;
+	margin: 15px auto;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	color: #fff;
+	text-decoration: none;
+	background-color: #404040; 
+	border-radius: 4px;
+	border: none;
+	text-align: center;
+	margin-bottom: 10%;
+	transition: all 0.4s ease 0s;
+	font-size: 16px;
+}
+
 
 .btn3{
 	color: #fff;

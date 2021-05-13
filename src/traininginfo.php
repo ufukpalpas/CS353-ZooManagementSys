@@ -6,6 +6,7 @@ if($_SESSION['login_user'] && $_SESSION['type'] = "keeper")
     $cageid = $_SESSION['cageid'];
     $animalid = $_SESSION['animalid'];
     $userid = $_SESSION['login_user']; 
+	$name = $_SESSION['name'];
 
     $anamequery = "select name from animal where animal_id ='". $animalid ."'"; 
     $anamearr = mysqli_query($mysqli, $anamequery);
@@ -34,7 +35,7 @@ if(isset($_POST['logout'])){
 
 	<body>
 		<header>
-			<a href="indexin.html" class="header-brand">KasaloZoo</a>
+			<a href="indexin.php" class="header-brand">KasaloZoo</a>
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
@@ -79,10 +80,10 @@ if(isset($_POST['logout'])){
 				
 				$query = 
 				"select *
-				 from animal
-				 where animal_id = $animalid;";
+				 from training
+				 where animal_id = $animalid and trainer_id = $userid;";
 				echo "<table style=\"width:90%; margin-top: 10px; margin-left: 60px; margin-right: 10px;\">";
-				echo "<tr class=\"toptable\">
+				echo "<tr class=\"toptable\"> 
 						<th class=\"thtitle\">Training Topic<hr></th>    
 						<th class=\"thtitle\">Training Date<hr></th>    
                         <th class=\"thtitle\">Remove<hr></th> 
@@ -96,34 +97,74 @@ if(isset($_POST['logout'])){
 						echo "<tr>
 								<th>". $row['training_topic'] ."<hr></th>    
 								<th>". $row['training_date'] ."<hr></th>    
-                                <th><form method=\"post\"><input type=\"submit\" name=\"".$i."req\" class=\"btn3\" value=\"Remove\"></form><hr></th> 
-                                <th><input name=\"newd\" class=\"right\" type=\"text\" name=\"newdate\" placeholder=\"Enter new date\" required=\"required\"><hr></th> 
-								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."tra\" class=\"btn3\" value=\"Update\"></form><hr></th>  
+                                <th><form method=\"post\"><input type=\"submit\" name=\"".$i."remove\" class=\"btn3\" value=\"Remove\"></form><hr></th> 
+                                <form method = \"post\"><th><input name=\"".$i."newdate\" id=\"".$i."newdate\" class=\"right\" type=\"text\" placeholder=\"Enter new date (yyyy-mm-dd)\" required=\"required\"><hr></th> 
+								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."update\" class=\"btn3\" value=\"Update\"></form><hr></th></form>  
 							</tr>";
-                            $arr[$i] = $row['animal_id'];
+                            $arr[$i] = $row['training_id'];
                             $i = $i + 1;
 					}
 				} else {
-					echo "Error while retrieving animal table. Error: " . mysqli_error($mysqli);
+					echo "Error while retrieving training table. Error: " . mysqli_error($mysqli);
 				}
 				echo "</table>";
-                /*
+                
 				if($_SERVER["REQUEST_METHOD"] == "POST"){
 					for($k = 0; $k < count($arr); $k++){
-						$place = strval($k) . "req";
-						$place2 = strval($k) . "tra";
-						if(isset($_POST[$place])){ //Request Treatment
-                            //Request Treatment----------------------------------------------------------
+						$place = strval($k) . "remove";
+						$place2 = strval($k) . "update";
+						if(isset($_POST[$place])){ //remove
+                            $queryrem = "delete from training where training_id =".$arr[$k]; 
+							if($result2 = $mysqli->query($queryrem)){
+								echo '<script type="text/JavaScript">
+								window.alert("Removed Successfully!");
+								window.location = "traininginfo.php";
+								 </script>';
+							} else {
+								echo "Error while deleting from training table. Error: " . mysqli_error($mysqli);
+							}
 							break;
 						}
-						if(isset($_POST[$place2])){//Training Information
-                            $_SESSION['animalid'] = $arr[$k];
-							header("location: traininginfo.php");
+						if(isset($_POST[$place2])){//update
+							$str = $k."newdate";
+							$newdate = $_POST[$str];
+							$queryupdate = "update training set training_date = \"$newdate\" where training_id =".$arr[$k].";";
+							if($result3 = $mysqli->query($queryupdate)){
+								echo '<script type="text/JavaScript">
+								window.alert("Training Updated Successfully!");
+								window.location = "traininginfo.php";
+								 </script>';
+							} else {
+								echo "Error while updating training table. Error: " . mysqli_error($mysqli);
+							}
 							break;
 						}
 					}
-				}*/
+				}
+
+				if(isset($_POST['addtra'])){
+					$tt = $_POST['tt'];
+					$tdate = $_POST['tdate'];
+					$queryadd = "insert into training(animal_id, trainer_id, training_date, training_topic) values($animalid, $userid, \"$tdate\", \"$tt\");";
+					if($result4 = $mysqli->query($queryadd)){
+						echo '<script type="text/JavaScript">
+						window.alert("Training Added Successfully!");
+						window.location = "traininginfo.php";
+						 </script>';
+					} else {
+						echo "Error while adding training. Error: " . mysqli_error($mysqli);
+					}
+				}
 				?>
+				</div>
+					
+				<div>
+					<hr>
+					<form method = "post" style="margin-top:5%">
+						<input id="tt" class="tf" type="id" name="tt" placeholder="Training Topic" required="required">
+						<input id="tdate" class="tf" type="id" name="tdate" placeholder="Training Date (yyyy-mm-dd)" required="required">
+						<button class="btntra" name="addtra">Add Training</button>
+					</form>
 				</div>
 			</section>
 		</main>
