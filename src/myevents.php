@@ -98,7 +98,7 @@ function console_log( $data ){
             </script>
             <section class="mainsec">
                 <h2>My Events</h2>
-				<div style="width:75%; height:fit-content;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px;">
+				<div style="width:75%; height:fit-content;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:25%">
             	<!--<hr style="margin-left: 20px; margin-right: 20px;">-->
 				<?php
 
@@ -133,7 +133,7 @@ function console_log( $data ){
                                     <th> Group Tour <hr></th>";
                             }
                             while(($row2 = $result2->fetch_assoc())!= null) {
-                                if($selected_date < $row['start_date']){
+                                if($selected_date < $row2['start_date']){
                                 echo "<tr>
                                     <th>". $row2['event_id'] ."<hr></th>    
                                     <th>". $row2['start_date'] ."<hr></th>    
