@@ -5,7 +5,6 @@ if($_SESSION['login_user'] && ($_SESSION['type'] == "coor"))
 {
     $userid = $_SESSION['login_user'];
     $name = $_SESSION['name'];
-    $usertype = $_SESSION['type'];
 } else {
     header("location: index.php");
 }
@@ -24,6 +23,7 @@ if(isset($_POST['logout'])){
 }
 
 if(isset($_POST['createBtn'])){
+    
     $name = $_POST['Full_Name'];
     $ssn = $_POST['ssn'];
     $leave = $_POST['leave'];
@@ -36,28 +36,26 @@ if(isset($_POST['createBtn'])){
     $speciality = $_POST['speciality'];
     $gender = $_POST['check'];
     $address = $_POST['apt'] . ' ' . $_POST['streetnum'] . ' ' . $_POST['streetnam'] . ' ' . $_POST['city'] . ' ' . $_POST['zip'];
-    $query = "insert into user values ('default', '$name', '$phone', '$email', '$gender', '$date_of_birth', '123456')";
+    $query = "insert into user values ('default', '$name', '$phone_number', '$email', '$gender', '$date_of_birth', '123456')";
     if($result = $mysqli->query($query)) {
-        echo '<script type="text/JavaScript">
-        window.alert("Employee added successfully!");
-        window.location = "createemployee.php";
-        </script>';
         $last_id = $mysqli->insert_id;
-        $query2 = "insert into employee values ('$last_id', 'ssn', '$address', '$salary', '0', '$leave', '$shift', default, '$userid')";
+        console_log("1");
+        $query2 = "insert into employee values ('$last_id', '$ssn', '$address', '$salary', '0', '$leave', '$shift', default, '$userid')";
         if($result = $mysqli->query($query2)) {
+            console_log("2");
             if(strcasecmp($e_type, "coordinator") == 0){
-                $query3 = "insert into coordinator values ('$last_id', 'lower', 'event')";
+                $query3 = "insert into coordinator values ('$last_id', 'Coordinator', 'North')";
             }
             elseif(strcasecmp($e_type, "keeper") == 0){
                 $query3 = "insert into keeper values ('$last_id', '$speciality')";
             }
-            elseif(strcasecmp($e_type, "veterinerian") == 0){
+            elseif(strcasecmp($e_type, "veterinarian") == 0){
                 $query3 = "insert into veterinerian values ('$last_id', '$specialty', default)";
             }
             elseif(strcasecmp($e_type, "guide") == 0){
-                $query3 = "insert into guide values ('$last_id', 'ssn', '$speciality', 0)";
+                $query3 = "insert into guide values ('$last_id', '$speciality', 30)";
             }
-            
+            console_log("3");
             if($result = $mysqli->query($query3)){
                 echo '<script type="text/JavaScript">
                 window.alert("Employee added successfully!");
@@ -81,7 +79,6 @@ if(isset($_POST['createBtn'])){
         window.location = "createemployee.php";
          </script>';
     }
-    header("location: createemployee.php");
 }
 
 
@@ -150,7 +147,7 @@ if(isset($_POST['createBtn'])){
                             <select name=\"e_type\" style=\" margin-left: 3%\" id=\"e_type\">
                             <option value=\"Coordinator\">Coordinator</option>
                             <option value=\"Keeper\">Keeper</option>
-                            <option value=\"Veterinerian\">Veterinerian</option>
+                            <option value=\"Veterinarian\">Veterinarian</option>
                             <option value=\"Guide\">Guide</option>
                             </select>
                             <div style=\"text-align: center\">";
@@ -195,7 +192,7 @@ if(isset($_POST['createBtn'])){
                     
                 
                 echo "<p align=\"middle\">";
-                echo "<button name=\"createBtn\" class=\"confirmBtn\" style=\"width: 25%\">  Create</button>";
+                echo "<button name=\"createBtn\" class=\"confirmBtn\" style=\"width: 25%; margin-bottom:5%;\">  Create</button>";
                 echo "</form> </p>";
 
                 
@@ -227,16 +224,6 @@ if(isset($_POST['createBtn'])){
             -->
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
 </main>
 <div class="wrapper"> <!-- alt kısım -->
     <footer>
@@ -263,11 +250,11 @@ if(isset($_POST['createBtn'])){
             <div class="footer-links">
                 <h5>CATEGORIES</h5>
                 <ul class="footer-links-first">
-                    <li><a href="index.php">Main Page</a></li>
-                    <li><a href="animals.php">Animals</a></li>
-                    <li><a href="events.php">Events</a></li>
-                    <li><a href="about.php">About Zoo</a></li>
-                </ul>
+						<li><a href="indexin.php">Main Page</a></li>
+						<li><a href="animalsin.php">Animals</a></li>
+						<li><a href="eventsin.php">Events</a></li>
+						<li><a href="aboutin.php">About Zoo</a></li>
+				</ul>
             </div>
             <div class="partner-list">
                 <h5>PARTNERS</h5>
