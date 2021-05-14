@@ -78,7 +78,7 @@ if(isset($_POST['cancelBtn'])){
 <head>
     <title> KasaloZoo </title>
     <meta charset = "UTF-8">
-    <link rel="stylesheet" href="ege.css">
+    <link rel="stylesheet" href="style2.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

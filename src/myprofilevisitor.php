@@ -43,7 +43,7 @@ function console_log( $data ){
 <head>
     <title> KasaloZoo </title>
     <meta charset = "UTF-8">
-    <link rel="stylesheet" href="ege.css">
+    <link rel="stylesheet" href="style2.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
 	<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
