@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
     if(isset($_POST['comment_form'])) {                
         $date = date('Y-m-d');
         $comment = $_POST['comment'];
-        $rate = 0;
+        $rate = 1;
         $anon = $_POST['anon'];
         $anonval = 0;
         if( $anon == NULL){
@@ -31,33 +31,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
             $anonval = 1; 
         }
         
-
-        if($_POST['rate5']){ 
+        if($_POST['rate5'] ?? null){ 
             $rate = 5;
         }
-        elseif($_POST['rate4']){
+        elseif($_POST['rate4'] ?? null){
             $rate = 4;
         }
-        elseif($_POST['rate3']){
+        elseif($_POST['rate3'] ?? null){
             $rate = 3;
         }
-        elseif($_POST['rate2']){
+        elseif($_POST['rate2'] ?? null){
             $rate = 2;
         }
-        elseif($_POST['rate1']){
+        elseif($_POST['rate1'] ?? null){
             $rate = 1;
         }
-
         $event_option = $_POST['option'];
+        
 
         $user_id_query = "SELECT user_id FROM group_tour WHERE event_id =" .$event_option;
         $user_i = $mysqli -> query($user_id_query);
         $user_i = mysqli_fetch_row($user_i)[0];
         $check_query = "SELECT event_id FROM comment WHERE event_id =". $event_option;
         $check_query = $mysqli -> query($check_query);
+        $frow = mysqli_fetch_row($check_query);
 
-
-        if(mysqli_fetch_row($check_query)[0] != NULL){
+        if( !$frow || ($frow[0] != NULL)){
             echo "<script type='text/javascript'>
             alert('You already made a comment !! ');
             </script>";
@@ -333,15 +332,15 @@ if(isset($_POST['logout'])){
                             </div>
                         </div>  
                         <div class='rate'>
-                            <input type='radio' id='star5' name='rate5' value='5' />
+                            <input type='checkbox' id='star5' name='rate5' value='5' />
                             <label for='star5' title='text'>5 stars</label>
-                            <input type='radio' id='star4' name='rate4' value='4' />
+                            <input type='checkbox' id='star4' name='rate4' value='4' />
                             <label for='star4' title='text'>4 stars</label>
-                            <input type='radio' id='star3' name='rate3' value='3' />
+                            <input type='checkbox' id='star3' name='rate3' value='3' />
                             <label for='star3' title='text'>3 stars</label>
-                            <input type='radio' id='star2' name='rate2' value='2' />
+                            <input type='checkbox' id='star2' name='rate2' value='2' />
                             <label for='star2' title='text'>2 stars</label>
-                            <input type='radio' id='star1' name='rate1' value='1' />      
+                            <input type='checkbox' id='star1' name='rate1' value='1' />      
                             <label for='star1' title='text'>1 stars</label>
                         </div>
                         <input type='checkbox' id='anon' name='anon' value = 'unchecked'/>
