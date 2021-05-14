@@ -1,7 +1,7 @@
 <?php
 include("config.php");
 session_start();
-if($_SESSION['login_user'] && $_SESSION['type'] = "coor") 
+if($_SESSION['login_user'] && ($_SESSION['type'] == "coor")) 
 {
     $userid = $_SESSION['login_user']; 
 	$name = $_SESSION['name'];
@@ -32,10 +32,10 @@ if(isset($_POST['logout'])){
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
-					<li><a href="indexin.html">Main Page</a></li>
-					<li><a href="animalsin.html">Animals</a></li>
-					<li><a href="eventsin.html">Events</a></li>
-					<li><a href="aboutin.html">About Zoo</a></li>
+					<li><a href="indexin.php">Main Page</a></li>
+					<li><a href="animalsin.php">Animals</a></li>
+					<li><a href="eventsin.php">Events</a></li>
+					<li><a href="aboutin.php">About Zoo</a></li>
                     <?php
                     echo "<li>
                         <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
@@ -231,10 +231,10 @@ if(isset($_POST['logout'])){
 				<div class="footer-links">
 					<h5>CATEGORIES</h5>
 					<ul class="footer-links-first">
-						<li><a href="indexin.html">Main Page</a></li>
-						<li><a href="animalsin.html">Animals</a></li>
-						<li><a href="eventsin.html">Events</a></li>
-						<li><a href="aboutin.html">About Zoo</a></li>
+						<li><a href="indexin.php">Main Page</a></li>
+						<li><a href="animalsin.php">Animals</a></li>
+						<li><a href="eventsin.php">Events</a></li>
+						<li><a href="aboutin.php">About Zoo</a></li>
 					</ul>
 				</div>
 				<div class="partner-list">

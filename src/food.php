@@ -1,12 +1,14 @@
 <?php
 include("config.php"); 
 session_start();
-function console_log( $data ){
-    echo '<script>';
-    echo 'console.log('. json_encode( $data ) .')';
-    echo '</script>';
-}
 
+if($_SESSION['login_user'] && ($_SESSION['type'] == "keeper")) 
+{
+    $userid = $_SESSION['login_user']; 
+	$name = $_SESSION['name'];
+} else {
+    header("location: index.php");
+}
 
 if(isset($_POST['increase_form'])){
 	$foodid = array_keys($_POST)[0];
@@ -45,6 +47,13 @@ if(isset($_POST['food_form'])){
 		echo "<script type='text/javascript'>
 			alert('Please enter a number!!');
 			</script>";
+	}
+
+	if(isset($_POST['logout'])){
+		session_unset(); 
+		session_destroy(); 
+		header("location: index.php");
+		exit;
 	}
 }
 
@@ -144,57 +153,51 @@ if(isset($_POST['food_form'])){
 		<meta charset = "UTF-8">
 		<link rel="stylesheet" href="loginstyle.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 	</head>
 
 	<body>
 		<header>
-			<a href="index.html" class="header-brand">KasaloZoo</a>
+			<a href="indexin.php" class="header-brand">KasaloZoo</a>
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
-					<li><a href="index.html">Main Page</a></li>
-					<li><a href="animals.html">Animals</a></li>
-					<li><a href="events.html">Events</a></li>
-					<li><a href="about.html">About Zoo</a></li>
-                    <li>
-                        <a href="#" onclick="toggleuserPopup()">Hello "username" ("user_id")
-                        <img class="down" src="image/user.png" alt="user logo">
+					<li><a href="indexin.html">Main Page</a></li>
+					<li><a href="animalsin.html">Animals</a></li>
+					<li><a href="eventsin.html">Events</a></li>
+					<li><a href="aboutin.html">About Zoo</a></li>
+                    <?php
+                    echo "<li>
+                        <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
+                        <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
-                    </li>
-                    <li><a href="#">"money"</a></li>
-                    <img class="dollar" src="image/dollar.png" alt="dollar logo">
+                    </li>";
+                    ?>
 				</ul>
 			</nav>
 		</header>
 		<main>
-            <div class="user-popup" id="user-popup">
+			<div class="user-popup" id="keep-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
-                    <button class="btn">View Profile</button>
-                    <button class="btn">Edit Profile</button>
-                    <button class="btn">Deposit Money</button>
-                    <button class="btn">Make Donation</button>
-                    <button class="btn">Create Complaint Form</button>
-                    <button class="btn">My Events</button>
-                    <button class="btn">Join a Group Tour</button>
-                    <button class="btn">Join a Endangered Birthday</button>
-                    <button class="btn">Logout</button>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">My Cages</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
                 </div>
             </div>
             <script>
 				function toggleuserPopup(){
-                    document.getElementById("user-popup").classList.toggle("activate");
+                    document.getElementById("keep-popup").classList.toggle("activate");
                 }
             </script>
 			<!-- CODE HERE -->
 			<div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
                 <h1 class="title"> Foods</h1>
                 <?php   
-                $userid = 3;
                 $query = "SELECT * FROM food ";
                 $result = $mysqli -> query($query);
                 echo "<table class='table' >"; 
@@ -246,11 +249,6 @@ if(isset($_POST['food_form'])){
 				echo "</div>";
 				?>
 			   </div>
-
-
-
-
-
             </main>
 		<div class="wrapper"> <!-- alt kısım -->
 			<footer>
@@ -277,10 +275,10 @@ if(isset($_POST['food_form'])){
 				<div class="footer-links">
 					<h5>CATEGORIES</h5>
 					<ul class="footer-links-first">
-						<li><a href="index.html">Main Page</a></li>
-						<li><a href="animals.html">Animals</a></li>
-						<li><a href="events.html">Events</a></li>
-						<li><a href="about.html">About Zoo</a></li>
+						<li><a href="indexin.php">Main Page</a></li>
+						<li><a href="animalsin.php">Animals</a></li>
+						<li><a href="eventsin.php">Events</a></li>
+						<li><a href="aboutin.php">About Zoo</a></li>
 					</ul>
 				</div>
 				<div class="partner-list">
@@ -290,25 +288,5 @@ if(isset($_POST['food_form'])){
 				</div>
 			</footer>
 		</div>
-		<script src="owlcarousel/jquery.min.js"></script>
-		<script src="owlcarousel/owl.carousel.js"></script>
-		<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 	</body>
 </html>

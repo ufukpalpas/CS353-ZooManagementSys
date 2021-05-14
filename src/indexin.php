@@ -37,8 +37,8 @@ if(isset($_POST['logout'])){
 	</head>
 
 	<body>
-    <header>
-		<a href="indexin.php" class="header-brand">KasaloZoo</a>
+    	<header>
+			<a href="indexin.php" class="header-brand">KasaloZoo</a>
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>

@@ -1,23 +1,20 @@
 <?php
 include("config.php");
 session_start();
-if($_SESSION['login_user'])
+if($_SESSION['login_user'] && ($_SESSION['type'] == "visitor"))
 {
-    $userid = $_SESSION['login_user'];
-    $namequery = "select name from user where user_id ='". $userid ."'"; 
-                $namearr = mysqli_query($mysqli, $namequery);
-                $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-                $name = $fetcharr['name'];
-                $_SESSION['name'] = $name;  
+    $userid = $_SESSION['login_user']; 
+    $name = $_SESSION['name'];
+	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
-        $money = $_SESSION['money'];
-		$typequery = "select discount_type from visitor where user_id ='". $userid ."'";
-        $typearr = mysqli_query($mysqli, $typequery);
-        $fetcharr = mysqli_fetch_array($typearr, MYSQLI_ASSOC);
-        $type = $fetcharr['discount_type'];
+		$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+        $moneyarr = mysqli_query($mysqli, $moneyquery);
+        $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+        $money = $fetchmarr['money'];
+        $_SESSION['money'] = $money;
     }
 } else {
-    header("location: birthday.php");
+    header("location: index.php");
 }
 
 function console_log( $data ){
@@ -87,47 +84,49 @@ if(isset($_POST['cancelBtn'])){
 </head>
 
 <body>
-<header>
-    <a href="index.html" class="header-brand">KasaloZoo</a>
-    <img class="logo" src="image/balina.png" alt="kasalot logo">
-    <nav>
-        <ul>
-            <li><a href="index.html">Main Page</a></li>
-            <li><a href="animals.html">Animals</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="about.html">About Zoo</a></li>
-            <?php
-                echo "<li>
-                    <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
-                    <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
-                    </a>
+    <header>
+			<a href="indexin.php" class="header-brand">KasaloZoo</a>
+			<img class="logo" src="image/balina.png" alt="kasalot logo">
+			<nav>
+				<ul>
+                    <li><a href="indexin.php">Main Page</a></li>
+					<li><a href="animalsin.php">Animals</a></li>
+					<li><a href="eventsin.php">Events</a></li>
+					<li><a href="aboutin.php">About Zoo</a></li>
+                    <?php
+                    echo "<li>
+                        <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
+                        <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
+                        </a>
                     </li>";
-
-                echo "<li><a href=\"#\">$money
-                    <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
-                    </a></li>";
-            ?>
-        </ul>
-    </nav>
-</header>
+                    if($usertype == "visitor")
+						echo "<li><a href=\"#\">$money
+						<img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
+						</a></li>";
+                    ?>
+				</ul>
+			</nav>
+	</header>
 <main>
-    <div class="user-popup" id="user-popup">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="close" onclick="toggleuserPopup()">×</div>
-            <h2 class="h2pop">Operations</h2>
-            <button class="btn">View Profile</button>
-            <button class="btn">Edit Profile</button>
-            <button class="btn">Deposit Money</button>
-            <button class="btn">Make Donation</button>
-            <button class="btn">Create Complaint Form</button>
-            <button class="btn">My Events</button>
-            <button class="btn">Join a Group Tour</button>
-            <button class="btn">Join a Endangered Birthday</button>
-            <button class="btn">Logout</button>
-        </div>
-    </div>
-    <script>
+<div class="user-popup" id="user-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">Deposit Money</button>
+                        <button class="btn">Make Donation</button>
+                        <button class="btn">Create Complaint Form</button>
+                        <button class="btn">My Events</button>
+                        <button class="btn">Join a Group Tour</button>
+                        <button class="btn">Join a Endangered Birthday</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+            <script>
 				function toggleuserPopup(){
                     document.getElementById("user-popup").classList.toggle("activate");
                 }
@@ -186,8 +185,8 @@ if(isset($_POST['cancelBtn'])){
                 }
 
                 echo "<p align=\"middle\">";
-                echo "<button name=\"confirmBtn\" class=\"confirmBtn\" style=\"width: 25%\">  Confirm</button>";
-                echo "<button name=\"cancelBtn\" class=\"cancelBtn\" style=\"width: 25%\">  Cancel</button>";
+                echo "<button name=\"confirmBtn\" class=\"confirmBtn\" style=\"width: 25%; margin-bottom:20%;\">  Confirm</button>";
+                echo "<button name=\"cancelBtn\" class=\"cancelBtn\" style=\"width: 25%; margin-bottom:20%;\">  Cancel</button>";
                 echo "</form> </p>";
 
                 }
@@ -255,11 +254,11 @@ if(isset($_POST['cancelBtn'])){
             <div class="footer-links">
                 <h5>CATEGORIES</h5>
                 <ul class="footer-links-first">
-                    <li><a href="index.html">Main Page</a></li>
-                    <li><a href="animals.html">Animals</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="about.html">About Zoo</a></li>
-                </ul>
+						<li><a href="indexin.php">Main Page</a></li>
+						<li><a href="animalsin.php">Animals</a></li>
+						<li><a href="eventsin.php">Events</a></li>
+						<li><a href="aboutin.php">About Zoo</a></li>
+				</ul>
             </div>
             <div class="partner-list">
                 <h5>PARTNERS</h5>
@@ -268,25 +267,5 @@ if(isset($_POST['cancelBtn'])){
         </div>
     </footer>
 </div>
-<script src="owlcarousel/jquery.min.js"></script>
-<script src="owlcarousel/owl.carousel.js"></script>
-<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 </body>
 </html>

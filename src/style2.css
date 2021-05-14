@@ -220,14 +220,14 @@ header nav ul li a{
     margin-right: 34%
 }
 
-  .user-popup .content {
+	.user-popup .content {
     position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%) scale(0);
     background:#fff;
     width:25%;
-    height:75%;
+    height:fit-content;
     z-index:2;
     text-align:center;
     border: 2px solid gray;

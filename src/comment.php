@@ -1,19 +1,28 @@
 <?php
 include("config.php"); 
 session_start();
-
-function console_log( $data ){
-    echo '<script>';
-    echo 'console.log('. json_encode( $data ) .')';
-    echo '</script>';
+if($_SESSION['login_user']) 
+{
+    $userid = $_SESSION['login_user']; 
+    $name = $_SESSION['name'];
+	$usertype = $_SESSION['type'];
+    if($_SESSION['type'] == "visitor"){
+		$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+        $moneyarr = mysqli_query($mysqli, $moneyquery);
+        $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+        $money = $fetchmarr['money'];
+        $_SESSION['money'] = $money;
+    }
+} else {
+    header("location: index.php");
 }
+
 if($_SERVER["REQUEST_METHOD"] == "POST" ){
     if(isset($_POST['comment_form'])) {                
         $date = date('Y-m-d');
         $comment = $_POST['comment'];
         $rate = 0;
         $anon = $_POST['anon'];
-        console_log($anon);
         $anonval = 0;
         if( $anon == NULL){
             $anonval = 0;
@@ -54,7 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
             </script>";
         }
         else{
-            $insert_query = "INSERT INTO comment VALUES(default,\"" .$comment. "\",\"" .$date. "\"," .$anonval. "," .$rate. "," .$user_i. ",16," .$event_option. ")";
+            $insert_query = "INSERT INTO comment VALUES(default,\"" .$comment. "\",\"" .$date. "\"," .$anonval. "," .$rate. "," .$user_i. ",$userid," .$event_option. ")";
             if($mysqli -> query($insert_query)){
                 echo "<script type='text/javascript'>
                 alert('Added');
@@ -62,6 +71,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
             }
         }
     }
+}
+
+if(isset($_POST['logout'])){
+    session_unset(); 
+    session_destroy(); 
+    header("location: index.php");
+    exit;
 }
 ?>
 
@@ -118,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
             height: 46px;
             padding: 0 10px;
             margin-left: 81%;
-            margin-top: -20%;
+            
         }
         .rate:not(:checked) > input {
             position:absolute;
@@ -198,40 +214,46 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
 	</head>
 
 	<body>
-		<header>
-			<a href="index.html" class="header-brand">KasaloZoo</a>
+        <header>
+		<a href="indexin.php" class="header-brand">KasaloZoo</a>
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
-					<li><a href="index.html">Main Page</a></li>
-					<li><a href="animals.html">Animals</a></li>
-					<li><a href="events.html">Events</a></li>
-					<li><a href="about.html">About Zoo</a></li>
-                    <li>
-                        <a href="#" onclick="toggleuserPopup()">Hello "username" ("user_id")
-                        <img class="down" src="image/user.png" alt="user logo">
+                    <li><a href="indexin.php">Main Page</a></li>
+					<li><a href="animalsin.php">Animals</a></li>
+					<li><a href="eventsin.php">Events</a></li>
+					<li><a href="aboutin.php">About Zoo</a></li>
+                    <?php
+                    echo "<li>
+                        <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
+                        <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
-                    </li>
-                    <li><a href="#">"money"</a></li>
-                    <img class="dollar" src="image/dollar.png" alt="dollar logo">
+                    </li>";
+                    if($usertype == "visitor")
+						echo "<li><a href=\"#\">$money
+						<img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
+						</a></li>";
+                    ?>
 				</ul>
 			</nav>
 		</header>
 		<main>
-            <div class="user-popup" id="user-popup">
+        <div class="user-popup" id="user-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
-                    <button class="btn">View Profile</button>
-                    <button class="btn">Edit Profile</button>
-                    <button class="btn">Deposit Money</button>
-                    <button class="btn">Make Donation</button>
-                    <button class="btn">Create Complaint Form</button>
-                    <button class="btn">My Events</button>
-                    <button class="btn">Join a Group Tour</button>
-                    <button class="btn">Join a Endangered Birthday</button>
-                    <button class="btn">Logout</button>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">Deposit Money</button>
+                        <button class="btn">Make Donation</button>
+                        <button class="btn">Create Complaint Form</button>
+                        <button class="btn">My Events</button>
+                        <button class="btn">Join a Group Tour</button>
+                        <button class="btn">Join a Endangered Birthday</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
                 </div>
             </div>
             <script>
@@ -243,7 +265,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
         <div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
                 <h1 class="title"> Write a Comment</h1>
                 <?php   
-                $userid = 16;
                 $query = "SELECT * FROM comment WHERE vis_id=".$userid;
                 $result = $mysqli -> query($query);
                 $events_query = "SELECT event_id FROM pay WHERE user_id = $userid";
@@ -358,10 +379,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
 				<div class="footer-links">
 					<h5>CATEGORIES</h5>
 					<ul class="footer-links-first">
-						<li><a href="index.html">Main Page</a></li>
-						<li><a href="animals.html">Animals</a></li>
-						<li><a href="events.html">Events</a></li>
-						<li><a href="about.html">About Zoo</a></li>
+						<li><a href="indexin.php">Main Page</a></li>
+						<li><a href="animalsin.php">Animals</a></li>
+						<li><a href="eventsin.php">Events</a></li>
+						<li><a href="aboutin.php">About Zoo</a></li>
 					</ul>
 				</div>
 				<div class="partner-list">
@@ -371,25 +392,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
 				</div>
 			</footer>
 		</div>
-		<script src="owlcarousel/jquery.min.js"></script>
-		<script src="owlcarousel/owl.carousel.js"></script>
-		<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 	</body>
 </html>

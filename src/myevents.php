@@ -2,30 +2,27 @@
 include("config.php");
 session_start();
 $_SESSION['date_selected'] = 2020-01-01;
-if($_SESSION['login_user'])
+if($_SESSION['login_user'] && ($_SESSION['type'] == "visitor"))
 {
-    $userid = $_SESSION['login_user'];
-    $namequery = "select name from user where user_id ='". $userid ."'"; 
-                $namearr = mysqli_query($mysqli, $namequery);
-                $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-                $name = $fetcharr['name'];
-                $_SESSION['name'] = $name;
+    $userid = $_SESSION['login_user']; 
+    $name = $_SESSION['name'];
+	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
-        $money = $_SESSION['money'];
-		$typequery = "select discount_type from visitor where user_id ='". $userid ."'";
-        $typearr = mysqli_query($mysqli, $typequery);
-        $fetcharr = mysqli_fetch_array($typearr, MYSQLI_ASSOC);
-        $type = $fetcharr['discount_type'];
+		$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+        $moneyarr = mysqli_query($mysqli, $moneyquery);
+        $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+        $money = $fetchmarr['money'];
+        $_SESSION['money'] = $money;
     }
     
 } else {
-    header("location: birthday.php");
+    header("location: index.php");
 }
 
 if(isset($_POST['logout'])){
     session_unset();
     session_destroy();
-    header("location: birthday.php");
+    header("location: index.php");
     exit;
 }
 
@@ -55,26 +52,30 @@ function console_log( $data ){
 
 	<body>
 		<header>
-			<a href="indexin.php" class="header-brand">KasaloZoo</a>
+		<a href="indexin.php" class="header-brand">KasaloZoo</a>
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
-					<li><a href="indexin.html">Main Page</a></li>
-					<li><a href="animalsin.html">Animals</a></li>
-					<li><a href="eventsin.html">Events</a></li>
-					<li><a href="aboutin.html">About Zoo</a></li>
+                    <li><a href="indexin.php">Main Page</a></li>
+					<li><a href="animalsin.php">Animals</a></li>
+					<li><a href="eventsin.php">Events</a></li>
+					<li><a href="aboutin.php">About Zoo</a></li>
                     <?php
                     echo "<li>
                         <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
                         <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
                     </li>";
+                    if($usertype == "visitor")
+						echo "<li><a href=\"#\">$money
+						<img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
+						</a></li>";
                     ?>
 				</ul>
 			</nav>
 		</header>
 		<main>
-			<div class="user-popup" id="coor-popup">
+			<div class="user-popup" id="user-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
@@ -82,18 +83,19 @@ function console_log( $data ){
                     <form method = "post">
                         <button class="btn">View Profile</button>
                         <button class="btn">Edit Profile</button>
-                        <button class="btn">Cage Management</button>
-                        <button class="btn">Create Event</button>
-                        <button class="btn">Respond to Complaint Forms</button>
-                        <button class="btn">Management</button>
-                        <button class="btn">Register a New Employee</button>
+                        <button class="btn">Deposit Money</button>
+                        <button class="btn">Make Donation</button>
+                        <button class="btn">Create Complaint Form</button>
+                        <button class="btn">My Events</button>
+                        <button class="btn">Join a Group Tour</button>
+                        <button class="btn">Join a Endangered Birthday</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
             </div>
             <script>
 				function toggleuserPopup(){
-                    document.getElementById("coor-popup").classList.toggle("activate");
+                    document.getElementById("user-popup").classList.toggle("activate");
                 }
             </script>
             <section class="mainsec">
@@ -111,7 +113,7 @@ function console_log( $data ){
 				 where p.user_id = '$userid' AND p.event_id = e.event_id";
                  $query1 = 
                  "select *
-                  from donation a, event e
+                  from attending a, event e
                   where a.user_id = '$userid' AND a.event_id = e.event_id";
 				echo "<table style=\"width:90%; margin-top: 10px; margin-left: 60px; margin-right: 10px;\">";
 				echo "<tr class=\"toptable\">
@@ -138,7 +140,7 @@ function console_log( $data ){
                                     <th>". $row2['event_id'] ."<hr></th>    
                                     <th>". $row2['start_date'] ."<hr></th>    
                                     <th>". $row2['duration'] ."<hr></th>
-                                    <th> Donation <hr></th>";  
+                                    <th> Animal Birthday <hr></th>";  
                                 }
                             }   
                                   
@@ -180,10 +182,10 @@ function console_log( $data ){
 				<div class="footer-links">
 					<h5>CATEGORIES</h5>
 					<ul class="footer-links-first">
-						<li><a href="indexin.html">Main Page</a></li>
-						<li><a href="animalsin.html">Animals</a></li>
-						<li><a href="eventsin.html">Events</a></li>
-						<li><a href="aboutin.html">About Zoo</a></li>
+						<li><a href="indexin.php">Main Page</a></li>
+						<li><a href="animalsin.php">Animals</a></li>
+						<li><a href="eventsin.php">Events</a></li>
+						<li><a href="aboutin.php">About Zoo</a></li>
 					</ul>
 				</div>
 				<div class="partner-list">

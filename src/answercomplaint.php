@@ -1,12 +1,19 @@
 <?php
 include("config.php"); 
 session_start();
+if($_SESSION['login_user'] && ($_SESSION['type'] == "coor")) 
+{
+    $userid = $_SESSION['login_user']; 
+	$name = $_SESSION['name'];
+} else {
+    header("location: index.php");
+}
 
 if(isset($_POST['complaint_response'])) { 
     $formid = $_POST['option'];
     $restext = $_POST['response'];
 
-    $insert_query = "UPDATE complaint SET respond_text ='".$restext."', coor_id = 1 WHERE form_id =".$formid; //bu 1 değişcek
+    $insert_query = "UPDATE complaint SET respond_text ='".$restext."', coor_id = $userid WHERE form_id =".$formid; //bu 1 değişcek
     if($mysqli -> query($insert_query)){
         echo "<script type='text/javascript'>
         alert('Added');
@@ -14,6 +21,12 @@ if(isset($_POST['complaint_response'])) {
     }
 }
 
+if(isset($_POST['logout'])){
+    session_unset(); 
+    session_destroy(); 
+    header("location: index.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -100,57 +113,55 @@ if(isset($_POST['complaint_response'])) {
 		<meta charset = "UTF-8">
 		<link rel="stylesheet" href="loginstyle.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 	</head>
 
 	<body>
-		<header>
-			<a href="index.html" class="header-brand">KasaloZoo</a>
-			<img class="logo" src="image/balina.png" alt="kasalot logo">
-			<nav>
-				<ul>
-					<li><a href="index.html">Main Page</a></li>
-					<li><a href="animals.html">Animals</a></li>
-					<li><a href="events.html">Events</a></li>
-					<li><a href="about.html">About Zoo</a></li>
-                    <li>
-                        <a href="#" onclick="toggleuserPopup()">Hello "username" ("user_id")
-                        <img class="down" src="image/user.png" alt="user logo">
-                        </a>
-                    </li>
-                    <li><a href="#">"money"</a></li>
-                    <img class="dollar" src="image/dollar.png" alt="dollar logo">
-				</ul>
-			</nav>
-		</header>
+        <header>
+                <a href="indexin.php" class="header-brand">KasaloZoo</a>
+                <img class="logo" src="image/balina.png" alt="kasalot logo">
+                <nav>
+                    <ul>
+                        <li><a href="indexin.html">Main Page</a></li>
+                        <li><a href="animalsin.html">Animals</a></li>
+                        <li><a href="eventsin.html">Events</a></li>
+                        <li><a href="aboutin.html">About Zoo</a></li>
+                        <?php
+                        echo "<li>
+                            <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
+                            <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
+                            </a>
+                        </li>";
+                        ?>
+                    </ul>
+                </nav>
+            </header>
 		<main>
-            <div class="user-popup" id="user-popup">
+            <div class="user-popup" id="coor-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
-                    <button class="btn">View Profile</button>
-                    <button class="btn">Edit Profile</button>
-                    <button class="btn">Deposit Money</button>
-                    <button class="btn">Make Donation</button>
-                    <button class="btn">Create Complaint Form</button>
-                    <button class="btn">My Events</button>
-                    <button class="btn">Join a Group Tour</button>
-                    <button class="btn">Join a Endangered Birthday</button>
-                    <button class="btn">Logout</button>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">Cage Management</button>
+                        <button class="btn">Create Event</button>
+                        <button class="btn">Respond to Complaint Forms</button>
+                        <button class="btn">Management</button>
+                        <button class="btn">Register a New Employee</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
                 </div>
             </div>
             <script>
 				function toggleuserPopup(){
-                    document.getElementById("user-popup").classList.toggle("activate");
+                    document.getElementById("coor-popup").classList.toggle("activate");
                 }
             </script>
 			<!-- CODE HERE -->
             <div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
                 <h1 class="title"> Answer a Complaint</h1>
                 <?php  
-                $userid = 16;
                 $query = "SELECT * FROM complaint WHERE coor_id IS NULL";
                 $result = $mysqli -> query($query);
                 echo "<table class='table' >"; 
@@ -207,7 +218,7 @@ if(isset($_POST['complaint_response'])) {
                 echo  "<td class='tabl' style='color: #3db7cc;' ><b>Date</b></td>";
                 echo  "<td class='tabl' style='color: #3db7cc;' ><b>About</b></td>";
                 echo "</tr>";
-                $answers = "SELECT * FROM complaint WHERE coor_id=1";
+                $answers = "SELECT * FROM complaint WHERE coor_id=$userid";
                 $answers = $mysqli -> query($answers);
                 
                 while ($row = $answers -> fetch_row()) {
@@ -294,10 +305,10 @@ if(isset($_POST['complaint_response'])) {
 				<div class="footer-links">
 					<h5>CATEGORIES</h5>
 					<ul class="footer-links-first">
-						<li><a href="index.html">Main Page</a></li>
-						<li><a href="animals.html">Animals</a></li>
-						<li><a href="events.html">Events</a></li>
-						<li><a href="about.html">About Zoo</a></li>
+						<li><a href="indexin.php">Main Page</a></li>
+						<li><a href="animalsin.php">Animals</a></li>
+						<li><a href="eventsin.php">Events</a></li>
+						<li><a href="aboutin.php">About Zoo</a></li>
 					</ul>
 				</div>
 				<div class="partner-list">
@@ -307,25 +318,5 @@ if(isset($_POST['complaint_response'])) {
 				</div>
 			</footer>
 		</div>
-		<script src="owlcarousel/jquery.min.js"></script>
-		<script src="owlcarousel/owl.carousel.js"></script>
-		<script>
-			$('.owl-carousel').owlCarousel({
-				loop:true,
-				margin:20,
-				nav:false,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:1
-					},
-					1000:{
-						items:1
-					}
-				}
-			})
-		</script>
 	</body>
 </html>

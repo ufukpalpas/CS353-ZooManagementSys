@@ -201,7 +201,7 @@ header .header-cases {
   transform:translate(-50%,-50%) scale(0);
   background:#fff;
   width:25%;
-  height:50%;
+  height:fit-content;
   z-index:2;
   text-align:center;
   border: 2px solid gray;
@@ -316,7 +316,7 @@ header .header-cases {
 	transform:translate(-50%,-50%) scale(0);
 	background:#fff;
 	width:25%;
-	height:50%;
+	height:fit-content;
 	z-index:2;
 	text-align:center;
 	border: 2px solid gray;
