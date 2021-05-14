@@ -4,11 +4,8 @@ session_start();
 if($_SESSION['login_user']) 
 {
     $userid = $_SESSION['login_user']; 
-    $namequery = "select name from user where user_id ='". $userid ."'"; 
-    $namearr = mysqli_query($mysqli, $namequery);
-    $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-    $name = $fetcharr['name'];
-    $_SESSION['name'] = $name;
+    $name = $_SESSION['name'];
+	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
         $moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
         $moneyarr = mysqli_query($mysqli, $moneyquery);
@@ -70,10 +67,10 @@ if(isset($_POST['deposit'])){
                         <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
                     </li>";
-                    
-                    echo "<li><a href=\"#\">$money
-                    <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
-                    </a></li>";
+                    if($usertype == "visitor")
+                        echo "<li><a href=\"#\">$money
+                        <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
+                        </a></li>";
                     ?>
                     
 				</ul>

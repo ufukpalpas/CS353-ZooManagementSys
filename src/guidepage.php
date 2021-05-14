@@ -1,9 +1,8 @@
 <?php
 include("config.php");
 session_start();
-if($_SESSION['login_user'] && $_SESSION['type'] = "keeper") 
+if($_SESSION['login_user'] && $_SESSION['type'] = "guide") 
 {
-    $cageid = $_SESSION['cageid'];
     $userid = $_SESSION['login_user']; 
 	$name = $_SESSION['name'];
 } else {
@@ -48,7 +47,7 @@ if(isset($_POST['logout'])){
 			</nav>
 		</header>
 		<main>
-			<div class="user-popup" id="keep-popup">
+            <div class="user-popup" id="guide-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
@@ -56,73 +55,47 @@ if(isset($_POST['logout'])){
                     <form method = "post">
                         <button class="btn">View Profile</button>
                         <button class="btn">Edit Profile</button>
-                        <button class="btn">My Cages</button>
+                        <button class="btn">My Tours</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
             </div>
             <script>
 				function toggleuserPopup(){
-                    document.getElementById("keep-popup").classList.toggle("activate");
+                    document.getElementById("guide-popup").classList.toggle("activate");
                 }
             </script>
             <section class="mainsec">
-                <h2>My Cages</h2>
-				<div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px;">
+                <h2>My Group Tours</h2>
+				<div style="width:75%; height:fit-content;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:26%">
             	<hr style="margin-left: 20px; margin-right: 20px;">
 				<?php
 				$query = 
-				"select *
-				 from cage c, assigned a
-				 where a.keep_id = \"". $userid ."\" and c.cage_id = a.cage_id;";
+				"select g.event_id, g.capacity, g.participant_count, e.start_date, e. duration
+				 from group_tour g, event e
+				 where g.guide_id = \"". $userid ."\" and g.event_id = e.event_id;";
 				echo "<table style=\"width:90%; margin-top: 10px; margin-left: 60px; margin-right: 10px;\">";
 				echo "<tr class=\"toptable\">
-						<th class=\"thtitle\">Cage ID<hr></th>    
-						<th class=\"thtitle\">Cage Type<hr></th>    
-						<th class=\"thtitle\">Animal Count<hr></th>    
-						<th class=\"thtitle\">Last Care Date<hr></th>   
-						<th class=\"thtitle\">Feed Time<hr></th>  
-						<th class=\"thtitle\">Location<hr></th>  
-						<th class=\"thtitle\">Food<hr></th>   
-						<th class=\"thtitle\">Select for any operation<hr></th>   
+						<th class=\"thtitle\">No<hr></th>    
+						<th class=\"thtitle\">Capacity<hr></th>    
+						<th class=\"thtitle\">Participant Count<hr></th>    
+						<th class=\"thtitle\">Start Date<hr></th>   
+						<th class=\"thtitle\">Duration<hr></th>  
 					</tr>";
-				$arr = array();
 				if($result = $mysqli->query($query)){
-					$i = 0;
 					while(($row = $result->fetch_assoc())!= null)  {
 						echo "<tr>
-								<th>". $row['cage_id'] ."<hr></th>    
-								<th>". $row['cage_type'] ."<hr></th>    
-								<th>". $row['animal_count'] ."<hr></th>    
-								<th>". $row['last_care_date'] ."<hr></th>    
-								<th>". $row['feed_time'] ."<hr></th>    
-								<th>". $row['location'] ."<hr></th> 
-								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."reg\" class=\"btn3\" value=\"Regularize Food\"></form><hr></th>  
-								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."select\" class=\"btn3\" value=\"Select\"></form><hr></th>  
+								<th>". $row['event_id'] ."<hr></th>    
+								<th>". $row['capacity'] ."<hr></th>    
+								<th>". $row['participant_count'] ."<hr></th>    
+								<th>". $row['start_date'] ."<hr></th>    
+								<th>". $row['duration'] ."<hr></th>    
 							</tr>";
-						$arr[$i] = $row['cage_id'];
-						$i = $i + 1;
 					}
 				} else {
 					echo "Error while retrieving cage table. Error: " . mysqli_error($mysqli);
 				}
 				echo "</table>";
-
-				if($_SERVER["REQUEST_METHOD"] == "POST"){
-					for($k = 0; $k < count($arr); $k++){
-						$place = strval($k) . "select";
-						$place2 = strval($k) . "reg";
-						if(isset($_POST[$place])){
-							$_SESSION['cageid'] = $arr[$k];
-							header("location: animalsincage.php");
-							break;
-						}
-						if(isset($_POST[$place2])){
-							// REGULARIZE FOOD ----------------------------------------------------------
-							break;
-						}
-					}
-				}
 				?>
 				</div>
 			</section>

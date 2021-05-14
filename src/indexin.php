@@ -4,17 +4,10 @@ session_start();
 if($_SESSION['login_user']) 
 {
     $userid = $_SESSION['login_user']; 
-    $namequery = "select name from user where user_id ='". $userid ."'"; 
-    $namearr = mysqli_query($mysqli, $namequery);
-    $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-    $name = $fetcharr['name'];
-    $_SESSION['name'] = $name;
+    $name = $_SESSION['name'];
+	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
-        $moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
-        $moneyarr = mysqli_query($mysqli, $moneyquery);
-        $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
-        $money = $fetchmarr['money'];
-        $_SESSION['money'] = $money;
+        $money = $_SESSION['money'];
     }
 } else {
     header("location: index.php");
@@ -55,12 +48,11 @@ if(isset($_POST['logout'])){
                         <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
                     </li>";
-                    
-                    echo "<li><a href=\"#\">$money
-                    <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
-                    </a></li>";
+                    if($usertype == "visitor")
+						echo "<li><a href=\"#\">$money
+						<img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
+						</a></li>";
                     ?>
-                    
 				</ul>
 			</nav>
 		</header>
@@ -84,12 +76,101 @@ if(isset($_POST['logout'])){
                     </form>
                 </div>
             </div>
-            <script>
-				function toggleuserPopup(){
-                    document.getElementById("user-popup").classList.toggle("activate");
-                }
-            </script>
 
+            <div class="user-popup" id="coor-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">Cage Management</button>
+                        <button class="btn">Create Event</button>
+                        <button class="btn">Respond to Complaint Forms</button>
+                        <button class="btn">Management</button>
+                        <button class="btn">Register a New Employee</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<div class="user-popup" id="keep-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">My Cages</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<div class="user-popup" id="guide-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">My Tours</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<div class="user-popup" id="vet-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleuserPopup()">×</div>
+                    <h2 class="h2pop">Operations</h2>
+                    <form method = "post">
+                        <button class="btn">View Profile</button>
+                        <button class="btn">Edit Profile</button>
+                        <button class="btn">Treatments</button>
+						<button class="btn">Invitations</button>
+                        <button name="logout" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+			<?php
+				if($usertype == "visitor"){
+					echo "<script>
+						function toggleuserPopup(){
+							document.getElementById(\"user-popup\").classList.toggle(\"activate\");
+						}
+					</script>";
+				} else if($usertype == "keeper") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"keep-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				} else if($usertype == "vet") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"vet-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				} else if($usertype == "coor") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"coor-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				} else if($usertype == "guide") {
+					echo "<script>
+					function toggleuserPopup(){
+						document.getElementById(\"guide-popup\").classList.toggle(\"activate\");
+					}
+					</script>";
+				}
+			?>
 			<section class="cases-links">
 				<div class="wrapper">
 					<!-- Orta kısım -->
@@ -102,7 +183,6 @@ if(isset($_POST['logout'])){
 							<p>Everything about the zoo and the animals are available online for everyone now!</p>
 						</div>
 					</div>
-
 
 					<div class="owl-carousel owl-theme">
 						<div class="comment">

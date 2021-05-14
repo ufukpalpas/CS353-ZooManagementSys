@@ -1,37 +1,11 @@
 <?php
 include("config.php");
 session_start();
-
-$usertype = 0; // 0 no user 1 visitor 2 keeper 3 vet 4 coordinator 5 guide
-
-if($_SESSION['login_user']){
-	$usertype = 1;
-} else if($_SESSION['keeper_user']){
-	$usertype = 2;
-} else if($_SESSION['vet_user']){
-	$usertype = 3;
-} else if($_SESSION['coor_user']){
-	$usertype = 4;
-} else if($_SESSION['guide_user']){
-	$usertype = 5;
-}
-
-if($_SESSION['login_user']) // değişecek
+if($_SESSION['login_user'] && $_SESSION['type'] = "keeper") 
 {
     $cageid = $_SESSION['cageid'];
-
-    $userid = $_SESSION['login_user']; // değişecek
-    $namequery = "select name from user where user_id ='". $userid ."'"; //session name e kadarlık kısım indexin.html e alınacak buraya sessiondan çekme gelecek
-    $namearr = mysqli_query($mysqli, $namequery);
-    $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-    $name = $fetcharr['name'];
-    $_SESSION['name'] = $name;
-
-    $moneyquery = "select money from visitor where user_id ='". $userid ."'"; //session name e kadarlık kısım indexin.html e alınacak buraya sessiondan çekme gelecek
-    $moneyarr = mysqli_query($mysqli, $moneyquery);// yanlızca visitor
-    $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
-    $money = $fetchmarr['money'];
-    $_SESSION['money'] = $money;
+    $userid = $_SESSION['login_user']; 
+	$name = $_SESSION['name'];
 } else {
     header("location: index.php");
 }
@@ -55,7 +29,7 @@ if(isset($_POST['logout'])){
 
 	<body>
 		<header>
-			<a href="indexin.html" class="header-brand">KasaloZoo</a>
+			<a href="indexin.php" class="header-brand">KasaloZoo</a>
 			<img class="logo" src="image/balina.png" alt="kasalot logo">
 			<nav>
 				<ul>
@@ -63,18 +37,18 @@ if(isset($_POST['logout'])){
 					<li><a href="animalsin.html">Animals</a></li>
 					<li><a href="eventsin.html">Events</a></li>
 					<li><a href="aboutin.html">About Zoo</a></li>
-                    <li>
-                        <a href="#" onclick="toggleuserPopup()">Hello "username" ("user_id")
-                        <img class="down" src="image/user.png" alt="user logo">
+                    <?php
+                    echo "<li>
+                        <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
+                        <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                         </a>
-                    </li>
-                    <li><a href="#">"money"</a></li>
-                    <img class="dollar" src="image/dollar.png" alt="dollar logo">
+                    </li>";
+                    ?>
 				</ul>
 			</nav>
 		</header>
 		<main>
-            <div class="user-popup" id="user-popup">
+			<div class="user-popup" id="keep-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
@@ -82,25 +56,54 @@ if(isset($_POST['logout'])){
                     <form method = "post">
                         <button class="btn">View Profile</button>
                         <button class="btn">Edit Profile</button>
-                        <button class="btn">Deposit Money</button>
-                        <button class="btn">Make Donation</button>
-                        <button class="btn">Create Complaint Form</button>
-                        <button class="btn">My Events</button>
-                        <button class="btn">Join a Group Tour</button>
-                        <button class="btn">Join a Endangered Birthday</button>
+                        <button class="btn">My Cages</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
             </div>
+
+            <div class="treatment-popup" id="treatment-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleTRPopup()">×</div>
+					<p class="h2pop">Request Treatment</p>
+					<form method = "post">
+						<input name="findings" class="tff" type="text" placeholder="Findings" required="required">
+						<select name="vets" id="vets" class="tf3" >
+						<?php
+							$queryvet = "select v.user_id, u.name from veterinarian v, user u where u.user_id = v.user_id;";
+							if($result = $mysqli->query($queryvet)){
+								$first = 0;
+								while(($row = $result->fetch_assoc())!= null)  {
+									$first++;
+									if($first == 1)
+										echo "<option selected=\"selected\" value=\"".$row['user_id']."\">".$row['name']." (".$row['user_id'].")</option>";   
+									else
+										echo "<option value=\"".$row['user_id']."\">".$row['name']." (".$row['user_id'].")</option>";   
+								}
+							} else {
+								echo "Error while retrieving cage table. Error: " . mysqli_error($mysqli);
+							}
+						?>
+                		</select>				
+						<button name="treatbtn" class="btn">Request Treatment</button>
+					</form>
+                </div>
+            </div>
+
             <script>
 				function toggleuserPopup(){
-                    document.getElementById("user-popup").classList.toggle("activate");
+                    document.getElementById("keep-popup").classList.toggle("activate");
+                }
+
+				function toggleTRPopup(){
+                    document.getElementById("treatment-popup").classList.toggle("activate");
                 }
             </script>
             <section class="mainsec">
                 <?php
                 echo "<h2>Animals in Cage #$cageid</h2>
-				<div style=\"width:87%; height:87%; background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px;\">
+				<div style=\"width:95%; height:95%; background-color:white; margin-left: 3.5%; margin-top: 20px; border-radius: 20px; margin-bottom: 20%;\">
             	<hr style=\"margin-left: 20px; margin-right: 20px;\">";
 				
 				$query = 
@@ -159,7 +162,10 @@ if(isset($_POST['logout'])){
 						$place = strval($k) . "req";
 						$place2 = strval($k) . "tra";
 						if(isset($_POST[$place])){ //Request Treatment
-                            //Request Treatment----------------------------------------------------------
+							$_SESSION['animalid'] = $arr[$k];
+							echo '<script type="text/JavaScript">
+								toggleTRPopup();
+								</script>';
 							break;
 						}
 						if(isset($_POST[$place2])){//Training Information
@@ -167,6 +173,32 @@ if(isset($_POST['logout'])){
 							echo '<script type="text/javascript">location.href = "traininginfo.php";</script>';
 							break;
 						}
+					}
+				}
+
+				if(isset($_POST['treatbtn'])){
+					$animalid= $_SESSION['animalid'];
+					$findings = $_POST['findings'];
+					$vets = $_POST['vets'];
+					$querytr = "insert into treatment_request(vet_id, findings) values($vets, \"$findings\");";
+					if($resulttr = $mysqli->query($querytr)) {
+						$last_id = $mysqli->insert_id;
+						$queryreq = "insert into request(animal_id, request_id, user_id) values($animalid, $last_id, $userid);";
+						if($resultreq = $mysqli->query($queryreq)) {
+							echo '<script type="text/JavaScript">
+							window.alert("Treatment request has sent to the veterinerian!");
+							 </script>';
+						} else {
+							echo '<script type="text/JavaScript">
+							window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
+							window.location = "mycagesin.php";
+							 </script>';
+						}
+					}else{
+						echo '<script type="text/JavaScript">
+						window.alert("Query operation failed!'.mysqli_error($mysqli).'");
+						window.location = "mycagesin.php";
+						 </script>';
 					}
 				}
 				?>
