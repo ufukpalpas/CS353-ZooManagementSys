@@ -7,7 +7,12 @@ if($_SESSION['login_user'])
     $name = $_SESSION['name'];
 	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
-        $money = $_SESSION['money'];
+		$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+        $moneyarr = mysqli_query($mysqli, $moneyquery);
+        $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+        $money = $fetchmarr['money'];
+        $_SESSION['money'] = $money;
+		
 		$typequery = "select discount_type from visitor where user_id ='". $userid ."'"; 
         $typearr = mysqli_query($mysqli, $typequery);
         $fetcharr = mysqli_fetch_array($typearr, MYSQLI_ASSOC);
@@ -257,11 +262,17 @@ if(isset($_POST['logout'])){
 									} else {
 										if($dresult = $mysqli->query($payquery)){
 											if($ddresult = $mysqli->query($upgtquery)){
-												$mysqli->query($moneyquery);
-												echo '<script type="text/JavaScript">
-												window.alert("Joined Successfully!");
-												window.location = "grouptourin.php";
-												</script>';
+												if($mysqli->query($moneyquery)){
+													echo '<script type="text/JavaScript">
+													window.alert("Joined Successfully!");
+													window.location = "grouptourin.php";
+													</script>';
+												} else{
+													echo '<script type="text/JavaScript">
+													window.alert("Money query failed!'.mysqli_error($mysqli).'");
+													window.location = "grouptourin.php";
+													</script>';
+												}
 											} else {
 												echo '<script type="text/JavaScript">
 												window.alert("Update Failed!'.mysqli_error($mysqli).'");

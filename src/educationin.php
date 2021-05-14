@@ -7,7 +7,11 @@ if($_SESSION['login_user'])
     $name = $_SESSION['name'];
 	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
-        $money = $_SESSION['money'];
+		$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+        $moneyarr = mysqli_query($mysqli, $moneyquery);
+        $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+        $money = $fetchmarr['money'];
+        $_SESSION['money'] = $money;
     }
 } else {
     header("location: education.php");

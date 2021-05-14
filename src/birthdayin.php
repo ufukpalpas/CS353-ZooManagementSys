@@ -7,7 +7,12 @@ if($_SESSION['login_user'])
     $name = $_SESSION['name'];
 	$usertype = $_SESSION['type'];
     if($_SESSION['type'] == "visitor"){
-        $money = $_SESSION['money'];
+		$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+        $moneyarr = mysqli_query($mysqli, $moneyquery);
+        $fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+        $money = $fetchmarr['money'];
+        $_SESSION['money'] = $money;
+		
 		$typequery = "select discount_type from visitor where user_id ='". $userid ."'"; 
         $typearr = mysqli_query($mysqli, $typequery);
         $fetcharr = mysqli_fetch_array($typearr, MYSQLI_ASSOC);
@@ -291,7 +296,7 @@ if(isset($_POST['logout'])){
 				?>
 				</div>
 
-				<h2>Attended Annimal Birthdays</h2>
+				<h2>Attended Animal Birthdays</h2>
 				<div style="width:75%; height:fit-content;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
             	<hr style="margin-left: 20px; margin-right: 20px;">
 				<?php
