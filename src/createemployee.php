@@ -80,8 +80,19 @@ if(isset($_POST['createBtn'])){
          </script>';
     }
 }
-
-
+/* Coordinator */
+if(isset($_POST['viewpemp'])) // common for all emp
+	header("location: myprofileemployee.php");
+if(isset($_POST['editpemp'])) // common for all emp
+	header("location: editprofileemployee.php");
+if(isset($_POST['cagem']))
+	header("location: cagemanagement.php");
+if(isset($_POST['cevent']))
+	header("location: createevents.php");
+if(isset($_POST['rescomp']))
+	header("location: answercomplaint.php");
+if(isset($_POST['regnew']))
+	header("location: createemployee.php");
 ?>
 
 <!DOCTYPE html>
@@ -121,13 +132,12 @@ if(isset($_POST['createBtn'])){
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">Cage Management</button>
-                        <button class="btn">Create Event</button>
-                        <button class="btn">Respond to Complaint Forms</button>
-                        <button class="btn">Management</button>
-                        <button class="btn">Register a New Employee</button>
+                        <button name="viewpemp" class="btn">View Profile</button>
+                        <button name="editpemp" class="btn">Edit Profile</button>
+                        <button name="cagem" class="btn">Cage Management</button>
+                        <button name="cevent" class="btn">Create Event</button>
+                        <button name="rescomp" class="btn">Respond to Complaint Forms</button>
+                        <button name="regnew" class="btn">Register a New Employee</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
@@ -140,9 +150,7 @@ if(isset($_POST['createBtn'])){
     <!-- CODE HERE -->
     <section class="mainsec">
         <h2>Register New Employee</h2>
-
         <?php
-        
                     echo "<form method= \"post\"><p1>Select Employee Type</p1>
                             <select name=\"e_type\" style=\" margin-left: 3%\" id=\"e_type\">
                             <option value=\"Coordinator\">Coordinator</option>

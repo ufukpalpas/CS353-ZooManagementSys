@@ -1,7 +1,7 @@
 <?php
 include("config.php");
 session_start();
-if($_SESSION['login_user'] && $_SESSION['type'] = "guide") 
+if($_SESSION['login_user'] && ($_SESSION['type'] == "guide")) 
 {
     $userid = $_SESSION['login_user']; 
 	$name = $_SESSION['name'];
@@ -15,6 +15,14 @@ if(isset($_POST['logout'])){
     header("location: index.php");
     exit;
 }
+
+/*Guide*/
+if(isset($_POST['mytours']))
+	header("location: guidepage.php");
+if(isset($_POST['viewpemp'])) // common for all emp
+	header("location: myprofileemployee.php");
+if(isset($_POST['editpemp'])) // common for all emp
+	header("location: editprofileemployee.php");
 ?>
 
 <!DOCTYPE html>
@@ -53,9 +61,9 @@ if(isset($_POST['logout'])){
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">My Tours</button>
+						<button name="viewpemp" class="btn">View Profile</button>
+                        <button name="editpemp" class="btn">Edit Profile</button>
+                        <button name="mytours" class="btn">My Tours</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>

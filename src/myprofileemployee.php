@@ -25,7 +25,37 @@ function console_log( $data ){
     echo '<script>';
     echo 'console.log('. json_encode( $data ) .')';
     echo '</script>';
-  }
+}
+
+/* Coordinator */
+if(isset($_POST['viewpemp'])) // common for all emp
+	header("location: myprofileemployee.php");
+if(isset($_POST['editpemp'])) // common for all emp
+	header("location: editprofileemployee.php");
+if(isset($_POST['cagem']))
+	header("location: cagemanagement.php");
+if(isset($_POST['cevent']))
+	header("location: createevents.php");
+if(isset($_POST['rescomp']))
+	header("location: answercomplaint.php");
+if(isset($_POST['regnew']))
+	header("location: createemployee.php");
+
+/*Keeper*/
+if(isset($_POST['mycage']))
+	header("location: mycagesin.php");
+if(isset($_POST['foodm']))
+	header("location: food.php");
+
+/*Guide*/
+if(isset($_POST['mytours']))
+	header("location: guidepage.php");
+
+/*Vet*/
+if(isset($_POST['treatbtn']))
+	header("location: index.php"); //-----------------------------------------
+if(isset($_POST['invbtn']))
+	header("location: index.php"); //-----------------------------------------
 ?>
 
 <!DOCTYPE html>
@@ -59,19 +89,18 @@ function console_log( $data ){
 			</nav>
 		</header>
 <main>
-<div class="user-popup" id="coor-popup">
+            <div class="user-popup" id="coor-popup">
                 <div class="overlay"></div>
                 <div class="content">
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">Cage Management</button>
-                        <button class="btn">Create Event</button>
-                        <button class="btn">Respond to Complaint Forms</button>
-                        <button class="btn">Management</button>
-                        <button class="btn">Register a New Employee</button>
+                        <button name="viewpemp" class="btn">View Profile</button>
+                        <button name="editpemp" class="btn">Edit Profile</button>
+                        <button name="cagem" class="btn">Cage Management</button>
+                        <button name="cevent" class="btn">Create Event</button>
+                        <button name="rescomp" class="btn">Respond to Complaint Forms</button>
+                        <button name="regnew" class="btn">Register a New Employee</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
@@ -83,9 +112,10 @@ function console_log( $data ){
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">My Cages</button>
+                        <button name="viewpemp" class="btn">View Profile</button>
+                        <button name="editpemp" class="btn">Edit Profile</button>
+                        <button name="mycage" class="btn">My Cages</button>
+						<button name="foodm" class="btn">Food Stock Management</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
@@ -97,9 +127,9 @@ function console_log( $data ){
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">My Tours</button>
+                        <button name="viewpemp" class="btn">View Profile</button>
+                        <button name="editpemp" class="btn">Edit Profile</button>
+                        <button name="mytours" class="btn">My Tours</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
@@ -111,14 +141,15 @@ function console_log( $data ){
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">Treatments</button>
-						<button class="btn">Invitations</button>
+                        <button name="viewpemp" class="btn">View Profile</button>
+                        <button name="editpemp" class="btn">Edit Profile</button>
+                        <button name="treatbtn" class="btn">Treatments</button>
+						<button name="invbtn" class="btn">Invitations</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
             </div>
+
 
 			<?php
 				if($usertype == "keeper") {

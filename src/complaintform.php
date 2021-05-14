@@ -35,6 +35,26 @@ if(isset($_POST['complaint_form'])) {
        </script>";
     }
 }
+
+/*VISITOR*/
+if(isset($_POST['viewp']))
+	header("location: myprofilevisitor.php");
+if(isset($_POST['editp']))
+	header("location: editprofilevisitor.php");
+if(isset($_POST['depositm']))
+	header("location: depositmoney.php");
+if(isset($_POST['mdonation']))
+	header("location: makedonation.php");
+if(isset($_POST['crcomp']))
+	header("location: complaintform.php");
+if(isset($_POST['myevents']))
+	header("location: myevents.php");
+if(isset($_POST['jgroup']))
+	header("location: grouptourin.php");
+if(isset($_POST['janimal']))
+	header("location: birthdayin.php");
+if(isset($_POST['mcomment']))
+	header("location: comment.php");
 ?>
 
 <!DOCTYPE html>
@@ -158,14 +178,15 @@ if(isset($_POST['complaint_form'])) {
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">Deposit Money</button>
-                        <button class="btn">Make Donation</button>
-                        <button class="btn">Create Complaint Form</button>
-                        <button class="btn">My Events</button>
-                        <button class="btn">Join a Group Tour</button>
-                        <button class="btn">Join a Endangered Birthday</button>
+                        <button name="viewp" class="btn">View Profile</a></button>
+                        <button name="editp" class="btn">Edit Profile</button>
+                        <button name="depositm" class="btn">Deposit Money</button>
+                        <button name="mdonation" class="btn">Make Donation</button>
+                        <button name="crcomp" class="btn">Create Complaint Form</button>
+						<button name="mcomment" class="btn">Make Comment</button>
+                        <button name="myevents" class="btn">My Events</button>
+                        <button name="jgroup" class="btn">Join a Group Tour</button>
+                        <button name="janimal" class="btn">Join a Endangered Birthday</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>

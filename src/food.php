@@ -57,6 +57,15 @@ if(isset($_POST['food_form'])){
 	}
 }
 
+/*Keeper*/
+if(isset($_POST['mycage']))
+	header("location: mycagesin.php");
+if(isset($_POST['foodm']))
+	header("location: food.php");
+if(isset($_POST['viewpemp'])) // common for all emp
+	header("location: myprofileemployee.php");
+if(isset($_POST['editpemp'])) // common for all emp
+	header("location: editprofileemployee.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -182,9 +191,10 @@ if(isset($_POST['food_form'])){
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button class="btn">View Profile</button>
-                        <button class="btn">Edit Profile</button>
-                        <button class="btn">My Cages</button>
+						<button name="viewpemp" class="btn">View Profile</button>
+                        <button name="editpemp" class="btn">Edit Profile</button>
+                        <button name="mycage" class="btn">My Cages</button>
+						<button name="foodm" class="btn">Food Stock Management</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
