@@ -7,47 +7,59 @@ function console_log( $data ){
     echo 'console.log('. json_encode( $data ) .')';
     echo '</script>';
 }
+if($_SERVER["REQUEST_METHOD"] == "POST" ){
+    if(isset($_POST['comment_form'])) {                
+        $date = date('Y-m-d');
+        $comment = $_POST['comment'];
+        $rate = 0;
+        $anon = $_POST['anon'];
+        console_log($anon);
+        $anonval = 0;
+        if( $anon == NULL){
+            $anonval = 0;
+        }
+        else{
+            $anonval = 1; 
+        }
+        
 
-if(isset($_POST['comment_form'])) {                
-    $date = date('Y-m-d');
-    $comment = $_POST['comment'];
-    $rate = 0;
+        if($_POST['rate5']){ 
+            $rate = 5;
+        }
+        elseif($_POST['rate4']){
+            $rate = 4;
+        }
+        elseif($_POST['rate3']){
+            $rate = 3;
+        }
+        elseif($_POST['rate2']){
+            $rate = 2;
+        }
+        elseif($_POST['rate1']){
+            $rate = 1;
+        }
 
-    if($_POST['rate5']){
-        $rate = 5;
-    }
-    elseif($_POST['rate4']){
-        $rate = 4;
-    }
-    elseif($_POST['rate3']){
-        $rate = 3;
-    }
-    elseif($_POST['rate2']){
-        $rate = 2;
-    }
-    elseif($_POST['rate1']){
-        $rate = 1;
-    }
+        $event_option = $_POST['option'];
 
-    $event_option = $_POST['option'];
+        $user_id_query = "SELECT user_id FROM group_tour WHERE event_id =" .$event_option;
+        $user_i = $mysqli -> query($user_id_query);
+        $user_i = mysqli_fetch_row($user_i)[0];
+        $check_query = "SELECT event_id FROM comment WHERE event_id =". $event_option;
+        $check_query = $mysqli -> query($check_query);
 
-    $user_id_query = "SELECT user_id FROM group_tour WHERE event_id =" .$event_option;
-    $user_i = $mysqli -> query($user_id_query);
-    $user_i = mysqli_fetch_row($user_i)[0];
-    $check_query = "SELECT event_id FROM comment WHERE event_id =". $event_option;
-    $check_query = $mysqli -> query($check_query);
-    console_log(mysqli_fetch_row($check_query)[0]);
-    if(mysqli_fetch_row($check_query)[0] != NULL){
-        echo "<script type='text/javascript'>
-         alert('You already made a comment !! ');
-        </script>";
-    }
-    else{
-        $insert_query = "INSERT INTO comment VALUES(default,\"" .$comment. "\",\"" .$date. "\",1," .$rate. "," .$user_i. ",16," .$event_option. ")";
-        if($mysqli -> query($insert_query)){
+
+        if(mysqli_fetch_row($check_query)[0] != NULL){
             echo "<script type='text/javascript'>
-            alert('Added');
-        </script>";
+            alert('You already made a comment !! ');
+            </script>";
+        }
+        else{
+            $insert_query = "INSERT INTO comment VALUES(default,\"" .$comment. "\",\"" .$date. "\"," .$anonval. "," .$rate. "," .$user_i. ",16," .$event_option. ")";
+            if($mysqli -> query($insert_query)){
+                echo "<script type='text/javascript'>
+                alert('Added');
+                </script>";
+            }
         }
     }
 }
@@ -141,8 +153,39 @@ if(isset($_POST['comment_form'])) {
         .select_event{
             border-radius: 5px;
         }
-
-
+        .anon{
+            font: 18px helvetica;
+        }
+        .special_button{  
+            z-index:0;
+            width : 302%;
+            height : 40px;
+            margin-top: -30px;
+            background-color: transparent;
+            border: none;
+        }
+        .special_button:hover, .special_button:focus {
+            background-color: transparent;
+        }
+        .drop_text {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            width: 75%;
+            height: 10%;
+            overflow: auto;
+            box-shadow: none;
+            z-index: 1;
+            border: 1px solid gray;
+            border-radius: 3px;
+        }
+        .drop_text a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .show {display: block;}
 
         </style>
 
@@ -213,7 +256,35 @@ if(isset($_POST['comment_form'])) {
                 echo "</tr>";
                 while ($row = $result -> fetch_row()) {
                     echo "<tr>";
-                    echo  "<td class='tabl'>".$row[0]."</td>";
+                    $but = $row[0];
+                    $comment = "SELECT comment_text FROM comment WHERE comment_id=".$but;
+                    $comment = $mysqli -> query($comment);
+                    $comment = mysqli_fetch_row($comment)[0];
+
+                    echo  "<td class='tabl'>" .$row[0]. "
+                            <input type='button'  class='special_button' onclick= 'popup(".$row[0].")'>
+                            <div class='drop_text' id ='".$row[0]."'>". $comment ."
+                            </div>
+                            </td>";
+
+                    echo" <script type='text/javascript'>
+                        function popup(row) {
+                            document.getElementById(row).classList.toggle('show');
+                        }
+                        window.onclick = function(event) {
+                        if (!event.target.matches('.special_button')) {
+                            var dropdowns = document.getElementsByClassName('drop_text');
+                            var i;
+                            for (i = 0; i < dropdowns.length; i++) {
+                            var openDropdown = dropdowns[i];
+                            if (openDropdown.classList.contains('show')) {
+                                openDropdown.classList.remove('show');
+                            }
+                            }
+                        }
+                    }     
+                     </script>";                                
+
                     echo  "<td class='tabl'>".$row[2]."</td>";
                     if($row[3]== 1){
                         echo  "<td class='tabl'>"."<i>anonymous</i>"."</td>";
@@ -227,7 +298,7 @@ if(isset($_POST['comment_form'])) {
                     <div class='text_field'>
                     <form method='post' name='comment_form'>
                         <div>
-                            <select class='select_event' name='option'>
+                            <select class='select_event' name='option' required>
                             <option value='' disabled selected>Choose Group Tour</option>";
                 
                             while ($row = $events -> fetch_row()) {
@@ -235,8 +306,8 @@ if(isset($_POST['comment_form'])) {
                             }
                 echo "    </select>
                             <div style='padding-top: 20px;'>
-                            <input type='text' style='height:200px;'class='comment_txt' name='comment' placeholder='Enter your comment here...'>
-                            <input style='height: 60px;' type='submit' name='comment_form' class='comment_btn' value='SUBMIT' > 
+                            <input type='text' style='height:200px;'class='comment_txt' name='comment' placeholder='Enter your comment here...' required>
+                            <input style='height: 60px;' type='submit' name='comment_form' class='comment_btn' value='SUBMIT'> 
                            
                             </div>
                         </div>  
@@ -252,21 +323,14 @@ if(isset($_POST['comment_form'])) {
                             <input type='radio' id='star1' name='rate1' value='1' />      
                             <label for='star1' title='text'>1 stars</label>
                         </div>
+                        <input type='checkbox' id='anon' name='anon' value = 'unchecked'/>
+                        <label for='anon' title='anonymous'>Anonymous</label>
                     </form>
                 </div>";
+         
          ?>
         </div>
-
-
-
-
-
-
-
-
-
-
-			
+		
 
 		</main>
 		<div class="wrapper"> <!-- alt kısım -->
