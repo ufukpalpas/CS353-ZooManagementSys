@@ -40,8 +40,13 @@ if(isset($_POST['confirmBtn'])){
     $date_of_birth = $_POST['date'];
     $gender = $_POST['check'];
     $discount_type = $_POST['check1'];
-    console_log($discount_type);
+    $new_password = $_POST['password'];
+    if(empty($new_password)){
     $query = "update user set name ='" . $name . "',email ='" . $email . "',phone_number ='" . $phone_number . "',date_of_birth ='" . $date_of_birth . "', gender ='" . $gender . "' where user_id=" . "'" . $userid . "'";
+    }
+    else{
+        $query = "update user set name ='" . $name . "',email ='" . $email . "',phone_number ='" . $phone_number . "',date_of_birth ='" . $date_of_birth . "', gender ='" . $gender . "', password = '" . $new_password . "' where user_id=" . "'" . $userid . "'";
+    }
     if($result = $mysqli->query($query)) {
         $query2 = "update visitor set discount_type =" . $discount_type . " where user_id=" . "'" . $userid . "'";
         if($result = $mysqli->query($query2)) {
@@ -76,7 +81,7 @@ if(isset($_POST['cancelBtn'])){
 <head>
     <title> KasaloZoo </title>
     <meta charset = "UTF-8">
-    <link rel="stylesheet" href="loginstyle.css">
+    <link rel="stylesheet" href="ege.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -132,6 +137,8 @@ if(isset($_POST['cancelBtn'])){
         <h2>Edit Profile</h2>
         <div style="text-align: center">
 
+        <script type = "text/javascript" src="confirmpassword.js"></script>
+
         <?php
                 $sql = "select u.name, u.email, u.phone_number, u.date_of_birth, u.gender, v.discount_type FROM user u, visitor v where u.USER_ID ='" . $userid . "' and v.user_id = u.user_id";
                 if($result = $mysqli->query($sql)){
@@ -144,6 +151,10 @@ if(isset($_POST['cancelBtn'])){
                             name=\"phone\" value=\"" . $row['phone_number']. "\">";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
                             name=\"date\" value=\"" . $row['date_of_birth']. "\">";
+                    echo "<p><input id= \"password\"class=\"leftover\" style=\"width: 40%\" type=\"password\"
+                            name=\"password\" value=\"\" placeholder= \" New Password\" onkeyup = 'checkpass();'>";
+                    echo "<input id= \"confirm_password\"class=\"leftover\" style=\"width: 40%\" type=\"password\"
+                            name=\"confirm_password\" value=\"\" placeholder= \" Confirm Password\" onkeyup = 'checkpass();'>";
                     
                             $gender_type = "Male";
                     if(strcasecmp($row['gender'], $gender_type)){

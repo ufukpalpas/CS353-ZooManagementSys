@@ -8,7 +8,7 @@ if($_SESSION['login_user'])
                 $namearr = mysqli_query($mysqli, $namequery);
                 $fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
                 $name = $fetcharr['name'];
-                $_SESSION['name'] = $name;
+                $_SESSION['name'] = $name;  
     if($_SESSION['type'] == "visitor"){
         $money = $_SESSION['money'];
 		$typequery = "select discount_type from visitor where user_id ='". $userid ."'";
@@ -20,6 +20,12 @@ if($_SESSION['login_user'])
     header("location: birthday.php");
 }
 
+function console_log( $data ){
+    echo '<script>';
+    echo 'console.log('. json_encode( $data ) .')';
+    echo '</script>';
+  }
+
 if(isset($_POST['logout'])){
     session_unset();
     session_destroy();
@@ -27,15 +33,44 @@ if(isset($_POST['logout'])){
     exit;
 }
 
-if(isset($_POST['edit'])){
-    header("location: editprofilevisitor.php");
+if(isset($_POST['confirmBtn'])){
+    $email = $_POST['email'];
+    $phone_number = $_POST['phone'];
+    $bank_details = $_POST['bank_details'];
+    $address = $_POST['address'];
+    $new_password = $_POST['password'];
+    if(empty($new_password)){
+        $query = "update user set email ='" . $email . "',phone_number ='" . $phone_number . "' where user_id=" . "'" . $userid . "'";
+    }
+    else{
+        $query = "update user set email ='" . $email . "',phone_number ='" . $phone_number . "', password='" . $new_password ."' where user_id=" . "'" . $userid . "'";
+    }
+    if($result = $mysqli->query($query)) {
+        $query2 = "update employee set bank_details ='" . $bank_details . "', address ='" . $address . "' where user_id=" . "'" . $userid . "'";
+        if($result = $mysqli->query($query2)) {
+            echo '<script type="text/JavaScript">
+            window.alert("Visitor updated successfully!");
+            window.location = "editprofileemployee.php";
+             </script>';
+        } else {
+            echo '<script type="text/JavaScript">
+            window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
+            window.location = "editprofileemployee.php";
+             </script>';
+        }
+    } else {
+        echo '<script type="text/JavaScript">
+        window.alert("Query operation failed!'.mysqli_error($mysqli).'");
+        window.location = "editprofileemployee.php";
+         </script>';
+    }
+    header("location: myprofileemployee.php");
 }
 
-function console_log( $data ){
-    echo '<script>';
-    echo 'console.log('. json_encode( $data ) .')';
-    echo '</script>';
-  }
+if(isset($_POST['cancelBtn'])){
+    header("location: myprofilevisitor.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +79,8 @@ function console_log( $data ){
     <title> KasaloZoo </title>
     <meta charset = "UTF-8">
     <link rel="stylesheet" href="ege.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-	<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 </head>
 
 <body>
@@ -55,10 +89,10 @@ function console_log( $data ){
     <img class="logo" src="image/balina.png" alt="kasalot logo">
     <nav>
         <ul>
-            <li><a href="indexin.php">Main Page</a></li>
-            <li><a href="animalsin.php">Animals</a></li>
-            <li><a href="eventsin.php">Events</a></li>
-            <li><a href="aboutin.php">About Zoo</a></li>
+            <li><a href="index.html">Main Page</a></li>
+            <li><a href="animals.html">Animals</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="about.html">About Zoo</a></li>
             <?php
                 echo "<li>
                     <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
@@ -79,17 +113,15 @@ function console_log( $data ){
         <div class="content">
             <div class="close" onclick="toggleuserPopup()">×</div>
             <h2 class="h2pop">Operations</h2>
-            <form method = "post">
-                <button class="btn">View Profile</button>
-                <button class="btn">Edit Profile</button>
-                <button class="btn">Deposit Money</button>
-                <button class="btn">Make Donation</button>
-                <button class="btn">Create Complaint Form</button>
-                <button class="btn">My Events</button>
-                <button class="btn">Join a Group Tour</button>
-                <button class="btn">Join a Endangered Birthday</button>
-                <button name="logout" class="btn">Logout</button>
-            </form>
+            <button class="btn">View Profile</button>
+            <button class="btn">Edit Profile</button>
+            <button class="btn">Deposit Money</button>
+            <button class="btn">Make Donation</button>
+            <button class="btn">Create Complaint Form</button>
+            <button class="btn">My Events</button>
+            <button class="btn">Join a Group Tour</button>
+            <button class="btn">Join a Endangered Birthday</button>
+            <button class="btn">Logout</button>
         </div>
     </div>
     <script>
@@ -99,43 +131,37 @@ function console_log( $data ){
             </script>
     <!-- CODE HERE -->
     <section class="mainsec">
-        <h2>My Profile</h2>
+        <h2>Edit Profile</h2>
         <div style="text-align: center">
+
+        <script type = "text/javascript" src="confirmpassword.js"></script>
         <?php
-                $sql = "select u.name, u.email, u.phone_number, u.date_of_birth, u.gender, v.discount_type FROM user u, visitor v where u.USER_ID ='" . $userid . "' and v.user_id = u.user_id";
+                $sql = "select u.email, u.phone_number, e.address, e.bank_details FROM user u, employee e where u.USER_ID ='" . $userid . "' and e.user_id = u.user_id";
                 if($result = $mysqli->query($sql)){
                     while(($row = $result->fetch_assoc())!= null){
-                    echo "<input class= \"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"name\" placeholder=\"" . $row['name'] . "\"readonly>";
+                    echo "<form method = \"post\"> <input class= \"leftover\" style=\"width: 40%\" type=\"text\"
+                            name=\"email\" value=\"" . $row['email'] . "\">";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"email\" placeholder=\"" . $row['email']. "\"readonly>";
+                            name=\"phone\" value=\"" . $row['phone_number']. "\">";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"phone\" placeholder=\"" . $row['phone_number']. "\"readonly>";
+                            name=\"address\" value=\"" . $row['address']. "\">";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"date\" placeholder=\"" . $row['date_of_birth']. "\"readonly>";
-                    echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"gender\" placeholder=\"" . $row['gender']. "\"readonly>";
-                    if($row['discount_type'])
-                        $discount_string = "Child";
-                    else
-                        $discount_string = "Adult";
-                    echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"discount\" placeholder=\"" . $discount_string. "\"readonly>";
+                            name=\"bank_details\" value=\"" . $row['bank_details']. "\">";
+                    echo "<p><input id= \"password\"class=\"leftover\" style=\"width: 40%\" type=\"password\"
+                            name=\"password\" value=\"\" placeholder= \" New Password\" onkeyup = 'checkpass();'>";
+                    echo "<input id= \"confirm_password\"class=\"leftover\" style=\"width: 40%\" type=\"password\"
+                            name=\"confirm_password\" value=\"\" placeholder= \" Confirm Password\" onkeyup = 'checkpass();'>";
+
                     }
                 }
-                else{
-                    echo '<script type="text/JavaScript">
-                    window.alert("Pay Failed!'.mysqli_error($mysqli).'");
-                    window.location = "myprofilevisitor.php";
-                    </script>';
 
-                }
-        ?>
-            <p align="middle">
-                <form method = "post">
-                    <button name="edit" class="btn" style= "width: 25%">  Edit Profile</button>
-                </form>
-            </p>
+                echo "<p align=\"middle\">";
+                echo "<button name=\"confirmBtn\" class=\"confirmBtn\" style=\"width: 25%\">  Confirm</button>";
+                echo "<button name=\"cancelBtn\" class=\"cancelBtn\" style=\"width: 25%\">  Cancel</button>";
+                echo "</form> </p>";
+                    
+        ?>    
+        
         </div>
     </section>
 

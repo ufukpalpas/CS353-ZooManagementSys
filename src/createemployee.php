@@ -31,40 +31,37 @@ if(isset($_POST['logout'])){
 
 if(isset($_POST['createBtn'])){
     $name = $_POST['Full_Name'];
-    $name = $_POST['ssn'];
-    $name = $_POST['leave'];
+    $ssn = $_POST['ssn'];
+    $leave = $_POST['leave'];
     $email = $_POST['email'];
     $phone_number = $_POST['phone'];
     $date_of_birth = $_POST['date'];
-    $name = $_POST['shift'];
-    $name = $_POST['salary'];
-    $name = $_POST['speciality'];
-    $name = $_POST['check'];
-    $query = "insert into user values ()";
+    $shift = $_POST['shift'];
+    $salary = $_POST['salary'];
+    $speciality = $_POST['speciality'];
+    $gender = $_POST['check'];
+    $query = "insert into user values ('default', '$name', '$phone', '$email', '$gender', '$date_of_birth', '123456')";
     if($result = $mysqli->query($query)) {
-        $query2 = "insert into employee values ()";
+        $last_id = $mysqli->insert_id;
+        $query2 = "insert into employee values ('$last_id', 'ssn', '$address', '$salary', '0', '$leave', '$shift', default, '$userid')";
         if($result = $mysqli->query($query2)) {
             echo '<script type="text/JavaScript">
-            window.alert("Visitor updated successfully!");
-            window.location = "editprofilevisitor.php";
+            window.alert("Employee updated successfully!");
+            window.location = "createemployee.php";
              </script>';
         } else {
             echo '<script type="text/JavaScript">
             window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
-            window.location = "editprofilevisitor.php";
+            window.location = "createemployee.php";
              </script>';
         }
     } else {
         echo '<script type="text/JavaScript">
         window.alert("Query operation failed!'.mysqli_error($mysqli).'");
-        window.location = "editprofilevisitor.php";
+        window.location = "createemployee.php";
          </script>';
     }
-    header("location: myprofilevisitor.php");
-}
-
-if(isset($_POST['cancelBtn'])){
-    header("location: myprofilevisitor.php");
+    header("location: createemployee.php");
 }
 
 
@@ -75,7 +72,7 @@ if(isset($_POST['cancelBtn'])){
 <head>
     <title> KasaloZoo </title>
     <meta charset = "UTF-8">
-    <link rel="stylesheet" href="loginstyle.css">
+    <link rel="stylesheet" href="ege.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

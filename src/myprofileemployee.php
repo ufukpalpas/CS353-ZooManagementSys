@@ -28,7 +28,7 @@ if(isset($_POST['logout'])){
 }
 
 if(isset($_POST['edit'])){
-    header("location: editprofilevisitor.php");
+    header("location: editprofileemployee.php");
 }
 
 function console_log( $data ){
@@ -44,9 +44,8 @@ function console_log( $data ){
     <title> KasaloZoo </title>
     <meta charset = "UTF-8">
     <link rel="stylesheet" href="ege.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
-	<link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
 </head>
 
 <body>
@@ -55,10 +54,10 @@ function console_log( $data ){
     <img class="logo" src="image/balina.png" alt="kasalot logo">
     <nav>
         <ul>
-            <li><a href="indexin.php">Main Page</a></li>
-            <li><a href="animalsin.php">Animals</a></li>
-            <li><a href="eventsin.php">Events</a></li>
-            <li><a href="aboutin.php">About Zoo</a></li>
+            <li><a href="index.html">Main Page</a></li>
+            <li><a href="animals.html">Animals</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="about.html">About Zoo</a></li>
             <?php
                 echo "<li>
                     <a href=\"#\" onclick=\"toggleuserPopup()\">Hello $name ($userid)
@@ -79,17 +78,15 @@ function console_log( $data ){
         <div class="content">
             <div class="close" onclick="toggleuserPopup()">×</div>
             <h2 class="h2pop">Operations</h2>
-            <form method = "post">
-                <button class="btn">View Profile</button>
-                <button class="btn">Edit Profile</button>
-                <button class="btn">Deposit Money</button>
-                <button class="btn">Make Donation</button>
-                <button class="btn">Create Complaint Form</button>
-                <button class="btn">My Events</button>
-                <button class="btn">Join a Group Tour</button>
-                <button class="btn">Join a Endangered Birthday</button>
-                <button name="logout" class="btn">Logout</button>
-            </form>
+            <button class="btn">View Profile</button>
+            <button class="btn">Edit Profile</button>
+            <button class="btn">Deposit Money</button>
+            <button class="btn">Make Donation</button>
+            <button class="btn">Create Complaint Form</button>
+            <button class="btn">My Events</button>
+            <button class="btn">Join a Group Tour</button>
+            <button class="btn">Join a Endangered Birthday</button>
+            <button class="btn">Logout</button>
         </div>
     </div>
     <script>
@@ -101,26 +98,35 @@ function console_log( $data ){
     <section class="mainsec">
         <h2>My Profile</h2>
         <div style="text-align: center">
+
         <?php
-                $sql = "select u.name, u.email, u.phone_number, u.date_of_birth, u.gender, v.discount_type FROM user u, visitor v where u.USER_ID ='" . $userid . "' and v.user_id = u.user_id";
+                $sql = "select u.name, u.email, u.phone_number, u.date_of_birth, u.gender, e.ssn, e.address, e.salary, e.years_worked, e.shift_hours, e.bank_details, e.leave_days FROM user u, employee e where u.USER_ID ='" . $userid . "' and e.user_id = u.user_id";
                 if($result = $mysqli->query($sql)){
                     while(($row = $result->fetch_assoc())!= null){
                     echo "<input class= \"leftover\" style=\"width: 40%\" type=\"text\"
                             name=\"name\" placeholder=\"" . $row['name'] . "\"readonly>";
+                    echo "<input class=\"rightover\" style=\"width: 40%\" type=\"text\"
+                            name=\"ssn\" placeholder=\"" . $row['ssn']. "\"readonly>";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
                             name=\"email\" placeholder=\"" . $row['email']. "\"readonly>";
-                    echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
+                    echo "<input class=\"rightover\" style=\"width: 40%\" type=\"text\"
                             name=\"phone\" placeholder=\"" . $row['phone_number']. "\"readonly>";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
                             name=\"date\" placeholder=\"" . $row['date_of_birth']. "\"readonly>";
+                    echo "<input class= \"rightover\" style=\"width: 40%\" type=\"text\"
+                            name=\"gender\" placeholder=\"" . $row['gender'] . "\"readonly>";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"gender\" placeholder=\"" . $row['gender']. "\"readonly>";
-                    if($row['discount_type'])
-                        $discount_string = "Child";
-                    else
-                        $discount_string = "Adult";
+                            name=\"address\" placeholder=\"" . $row['address']. "\"readonly>";
+                    echo "<input class=\"rightover\" style=\"width: 40%\" type=\"text\"
+                            name=\"bank_details\" placeholder=\"" . $row['bank_details']. "\"readonly>";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
-                            name=\"discount\" placeholder=\"" . $discount_string. "\"readonly>";
+                            name=\"salary\" placeholder=\"" . $row['salary']. "\"readonly>";
+                    echo "<input class=\"rightover\" style=\"width: 40%\" type=\"text\"
+                            name=\"years_worked\" placeholder=\"" . $row['years_worked']. "\"readonly>";
+                    echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
+                            name=\"shift_hours\" placeholder=\"" . $row['shift_hours']. "\"readonly>";
+                    echo "<input class=\"rightover\" style=\"width: 40%\" type=\"text\"
+                            name=\"leave_days\" placeholder=\"" . $row['leave_days']. "\"readonly>";
                     }
                 }
                 else{
@@ -131,23 +137,28 @@ function console_log( $data ){
 
                 }
         ?>
+            <!--
+            <input class="leftover" style= "width: 40%" type="text" name="name" placeholder="Full Name" readonly>
+            <input class="rightover" style= "width: 40%" type="text" name="ssn" placeholder="Social Security Number" readonly>
+            <input class="leftover" style= "width: 40%" type="text" name="email" placeholder="Email" readonly>
+            <input class="rightover" style= "width: 40%" type="text" name="phone" placeholder="Phone Number" readonly>
+            <input class="leftover" style= "width: 40%" type="text" name="date" placeholder="Date of Birth (dd.mm.yy)" readonly>
+            <input class="rightover" style= "width: 40%" type="text" name="gender" placeholder="Male/Female" readonly>
+            <input class="leftover" style= "width: 40%" type="text" name="address" placeholder="Address" readonly>
+            <input class="rightover" style= "width: 40%" type="text" name="bank_details" placeholder="Bank Details" readonly>
+            <input class="leftover" style= "width: 40%" type="text" name="salary" placeholder="Salary" readonly>
+            <input class="rightover" style= "width: 40%" type="text" name="years_worked" placeholder="Years Worked" readonly>
+            <input class="leftover" style= "width: 40%" type="text" name="shift_hours" placeholder="Shift Hours" readonly>
+            <input class="rightover" style= "width: 40%" type="text" name="leave_days" placeholder="Leave Days" readonly>
+
+            -->
             <p align="middle">
-                <form method = "post">
-                    <button name="edit" class="btn" style= "width: 25%">  Edit Profile</button>
-                </form>
+            <form method = "post">
+                <button name = "edit" class="btn" style= "width: 25%">  Edit Profile</button>
+            </form>
             </p>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
 </main>
 <div class="wrapper"> <!-- alt kısım -->
     <footer>
