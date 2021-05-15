@@ -2,44 +2,53 @@
 include("config.php");
 session_start();
 function vislogin($mysqli){
-	$userid = $_POST['userid'];
+	$emaillgn = $_POST['emaillgn'];
     $password = $_POST['password'];
-	echo $userid;
-	$query = " select user_id, password from user where user_id=\"$userid\" and password=\"$password\"";
-	$query1 = " select user_id from visitor where user_id=\"$userid\"";
-    if(($result = $mysqli->query($query)) && ($result1 = $mysqli->query($query1))) {
-		if($result->num_rows == 1){
-			if($result1->num_rows == 1){
-				$_SESSION['type'] = "visitor";
-
-				$namequery = "select name from user where user_id ='". $userid ."'"; 
-				$namearr = mysqli_query($mysqli, $namequery);
-				$fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
-				$name = $fetcharr['name'];
-				$_SESSION['name'] = $name;
-
-				$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
-				$moneyarr = mysqli_query($mysqli, $moneyquery);
-				$fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
-				$money = $fetchmarr['money'];
-				$_SESSION['money'] = $money;
-				header("location: animalsin.php");
-			} else {
+	$query = " select user_id, email, password from user where email=\"$emaillgn\" and password=\"$password\"";
+    if(($result = $mysqli->query($query))) {
+		if($result->num_rows == 1) {
+			$fetcharr0 = mysqli_fetch_array($result, MYSQLI_ASSOC);
+			$userid = $fetcharr0['user_id'];
+			$query1 = " select user_id from visitor where user_id=\"$userid\"";
+			if(($result1 = $mysqli->query($query1))){
+					if($result1->num_rows == 1){
+						$_SESSION['login_user'] = $userid;
+						$_SESSION['type'] = "visitor";
+		
+						$namequery = "select name from user where user_id ='". $userid ."'"; 
+						$namearr = mysqli_query($mysqli, $namequery);
+						$fetcharr = mysqli_fetch_array($namearr, MYSQLI_ASSOC);
+						$name = $fetcharr['name'];
+						$_SESSION['name'] = $name;
+		
+						$moneyquery = "select money from visitor where user_id ='". $userid ."'"; 
+						$moneyarr = mysqli_query($mysqli, $moneyquery);
+						$fetchmarr = mysqli_fetch_array($moneyarr, MYSQLI_ASSOC);
+						$money = $fetchmarr['money'];
+						$_SESSION['money'] = $money;
+						header("location: indexin.php");
+					} else {
+						echo '<script type="text/JavaScript">
+						window.alert("Please use employee login!");
+						window.location = "index.php";
+						</script>';
+					}
+			}else{
 				echo '<script type="text/JavaScript">
-				window.alert("Please use employee sign in!");
-				window.location = "animals.php";
+				window.alert("Query2 operation failed!");
+				window.location = "index.php";
 				</script>';
 			}
 		} else {
 			echo '<script type="text/JavaScript">
-					window.alert("Incorrect username or ID please try again!");
-					window.location = "animals.php";
-			</script>';
+					window.alert("Incorrect email or password please try again!");
+					window.location = "index.php";
+					</script>';
 		}
     } else {
         echo '<script type="text/JavaScript">
                 window.alert("Query operation failed!");
-                window.location = "animals.php";
+                window.location = "index.php";
             </script>';
     }
 }
@@ -83,16 +92,19 @@ function register($mysqli){
 }
 
 function emplogin($mysqli){
-	$userid = $_POST['empuserid'];
+	$emailemp = $_POST['emailemp'];
     $password = $_POST['emppass'];
-	echo $userid;
-	$query = " select user_id, password from user where user_id=\"$userid\" and password=\"$password\"";
-	$query1 = " select user_id from keeper where user_id=\"$userid\"";
-	$query2 = " select user_id from veterinarian where user_id=\"$userid\"";
-	$query3 = " select user_id from coordinator where user_id=\"$userid\"";
-	$query4 = " select user_id from guide where user_id=\"$userid\"";
+	$query = " select user_id, email, password from user where email=\"$emailemp\" and password=\"$password\"";
     if($result = $mysqli->query($query)) {
 		if($result->num_rows == 1){
+			$fetcharr0 = mysqli_fetch_array($result, MYSQLI_ASSOC);
+			$userid = $fetcharr0['user_id'];
+
+			$query1 = " select user_id from keeper where user_id=\"$userid\"";
+			$query2 = " select user_id from veterinarian where user_id=\"$userid\"";
+			$query3 = " select user_id from coordinator where user_id=\"$userid\"";
+			$query4 = " select user_id from guide where user_id=\"$userid\"";
+
 			$result1 = $result = $mysqli->query($query1);
 			$result2 = $result = $mysqli->query($query2);
 			$result3 = $result = $mysqli->query($query3);
@@ -201,14 +213,14 @@ if(isset($_POST['emploginn'])){
 						</div>
 						<div class="loginPanel">
 							<form method = "post">
-								<input id="userid" class="id" type="id" name="userid" placeholder="User ID" required="required">
+								<input id="emaillgn" class="id" type="id" name="emaillgn" placeholder="Email" required="required">
 								<input id="password" class="pass" type="password" name="password" placeholder="Password" required="required">
 								<button class="btn" name="vislogin">Sign In</button>
 							</form>
 						</div>
 						<div class="loginPanel">
 							<form method = "post">
-								<input name="empuserid" class="id" type="id" name="id" placeholder="User ID (employee)" required="required">
+								<input name="emailemp" class="id" type="id" name="emailemp" placeholder="Email (employee)" required="required">
 								<input name="emppass" class="pass" type="password" name="pass" placeholder="Password" required="required">
 								<button class="btn" name="emploginn">Sign In</button>
 							</form>
