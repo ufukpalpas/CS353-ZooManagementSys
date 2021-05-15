@@ -109,7 +109,7 @@ if(isset($_POST['editpemp'])) // common for all emp
 								<th>". $row['training_topic'] ."<hr></th>    
 								<th>". $row['training_date'] ."<hr></th>    
                                 <th><form method=\"post\"><input type=\"submit\" name=\"".$i."remove\" class=\"btn3\" value=\"Remove\"></form><hr></th> 
-                                <form method = \"post\"><th><input name=\"".$i."newdate\" id=\"".$i."newdate\" class=\"right\" type=\"text\" placeholder=\"Enter new date (yyyy-mm-dd)\" required=\"required\"><hr></th> 
+                                <form method = \"post\"><th><input name=\"".$i."newdate\" id=\"".$i."newdate\" class=\"right\" type=\"date\" placeholder=\"Enter New Date\" required=\"required\"><hr></th> 
 								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."update\" class=\"btn3\" value=\"Update\"></form><hr></th></form>  
 							</tr>";
                             $arr[$i] = $row['training_id'];
@@ -173,7 +173,7 @@ if(isset($_POST['editpemp'])) // common for all emp
 					<hr>
 					<form method = "post" style="margin-top:5%">
 						<input id="tt" class="tf" type="id" name="tt" placeholder="Training Topic" required="required">
-						<input id="tdate" class="tf" type="id" name="tdate" placeholder="Training Date (yyyy-mm-dd)" required="required">
+						<input id="tdate" class="tf" onfocus="(this.type='date')" type="id" name="tdate" placeholder="Training Date" required="required">
 						<button class="btntra" name="addtra">Add Training</button>
 					</form>
 				</div>

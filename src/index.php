@@ -241,7 +241,7 @@ if(isset($_POST['emploginn'])){
 						<input name="fullname" class="left" type="text" name="name" placeholder="Full Name" required="required">
 						<input name="email" class="right" type="text" name="email" placeholder="Email" required="required">
 						<input name="phoneno" class="left" type="text" name="phone" placeholder="Phone Number" required="required">
-						<input name="dateofbirth" class="right" type="text" name="date" placeholder="Date of Birth (dd.mm.yy)" required="required">
+						<input name="dateofbirth" class="right" type="date" name="date" placeholder="Date of Birth" required="required">
 						<input name="password" class="left" type="password" name="pass" placeholder="Password" required="required">
 						<input name="confpass" class="right" type="password" name="pass" placeholder="Confirm Password" required="required">
 						<p class="gender">Gender: </p>
