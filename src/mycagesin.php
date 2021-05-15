@@ -17,6 +17,51 @@ if(isset($_POST['logout'])){
     exit;
 }
 
+if(isset($_POST['feedbtn'])){
+	$famount = $_POST['famount'];
+	$feedtime = $_POST['feedtime'];
+	echo '<script type="text/JavaScript">
+	console.log("'.$feedtime.'");
+	</script>';
+	$barcode = $_POST['barcode'];
+	$checkquery = "select stock from food where barcode = $barcode;";
+	if($result = $mysqli->query($checkquery)) {
+		$query = "insert into regularize_food values($cageid, $barcode, \"$feedtime\", $famount, $userid);"; 
+		$query2 = "update cage set feed_time = \"$feedtime\" where cage_id = $cageid;";
+		$query3 = "update food set stock = stock - $famount where barcode = $barcode;";
+		if($result = $mysqli->query($query)) {
+			if($result2 = $mysqli->query($query2)){
+				if($result2 = $mysqli->query($query3)){
+					echo '<script type="text/JavaScript">
+					window.alert("Cage successfully feeded!");
+					window.location = "mycagesin.php";
+					</script>';
+				} else {
+					echo '<script type="text/JavaScript">
+					window.alert("Query3 operation failed!'.mysqli_error($mysqli).'");
+					window.location = "mycagesin.php";
+					</script>';
+				}
+			} else {
+				echo '<script type="text/JavaScript">
+				window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
+				window.location = "mycagesin.php";
+				</script>';
+			}
+		} else {
+			echo '<script type="text/JavaScript">
+			window.alert("Query operation failed!'.mysqli_error($mysqli).'");
+			window.location = "mycagesin.php";
+			</script>';
+		}
+	} else {
+		echo '<script type="text/JavaScript">
+		window.alert("Not enough stock!");g
+		window.location = "mycagesin.php";
+		</script>';
+	}
+}
+
 /*Keeper*/
 if(isset($_POST['mycage']))
 	header("location: mycagesin.php");
@@ -26,6 +71,7 @@ if(isset($_POST['viewpemp'])) // common for all emp
 	header("location: myprofileemployee.php");
 if(isset($_POST['editpemp'])) // common for all emp
 	header("location: editprofileemployee.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -72,14 +118,33 @@ if(isset($_POST['editpemp'])) // common for all emp
                     </form>
                 </div>
             </div>
+
+            <div class="treatment-popup" id="treatment-popup">
+                <div class="overlay"></div>
+                <div class="content">
+                	<div class="close" onclick="toggleTRPopup()">×</div>
+					<p class="h2pop">Regularize Food</p>
+					<form method = "post">
+						<input name="feedtime" class="tff" type="text" placeholder="Feed Time (hh:mm)" required="required">
+						<input name="barcode" class="tff" type="text" placeholder="Barcode" required="required">
+						<input name="famount" class="tff" type="text" placeholder="Food Amount" required="required">
+						<button name="feedbtn" class="btn">Regularize Food</button>
+					</form>
+                </div>
+            </div>
+
             <script>
 				function toggleuserPopup(){
                     document.getElementById("keep-popup").classList.toggle("activate");
                 }
+
+				function toggleTRPopup(){
+                    document.getElementById("treatment-popup").classList.toggle("activate");
+                }
             </script>
             <section class="mainsec">
                 <h2>My Cages</h2>
-				<div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px;">
+				<div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
             	<hr style="margin-left: 20px; margin-right: 20px;">
 				<?php
 				$query = 
@@ -125,11 +190,16 @@ if(isset($_POST['editpemp'])) // common for all emp
 						$place2 = strval($k) . "reg";
 						if(isset($_POST[$place])){
 							$_SESSION['cageid'] = $arr[$k];
-							header("location: animalsincage.php");
+							echo '<script type="text/JavaScript">
+								window.location.href = "animalsincage.php";
+							</script>';
+							//header("location: animalsincage.php");
 							break;
 						}
 						if(isset($_POST[$place2])){
-							// REGULARIZE FOOD ----------------------------------------------------------
+							echo '<script type="text/JavaScript">
+							toggleTRPopup();
+							</script>';
 							break;
 						}
 					}

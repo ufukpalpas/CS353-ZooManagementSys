@@ -399,8 +399,26 @@ header nav ul li a{
 	height: 20px;
 }
 
+.btn35{
+	color: #fff;
+	text-decoration: none;
+	background-color: #404040; 
+	border-radius: 4px;
+	display: inline-block;
+	border: none;
+	text-align: center;
+	transition: all 0.4s ease 0s;
+	width: fit-content;
+	font-size: 12px;
+	height: 16px;
+}
+
 .toptable{
 	font-size: 22px;
+}
+
+.th2{
+	font-size: 14px;
 }
 
 th{
@@ -409,6 +427,11 @@ th{
 
 .thtitle{
 	color: #3db7cc;
+}
+
+.thtitle2{
+	color: #3db7cc;
+	font-size: 16px ;
 }
 
 

@@ -123,42 +123,42 @@ if(isset($_POST['editpemp'])) // common for all emp
 				 where cage_id = $cageid;";
 				echo "<table style=\"width:90%; margin-top: 10px; margin-left: 60px; margin-right: 10px;\">";
 				echo "<tr class=\"toptable\">
-						<th class=\"thtitle\">Animal ID<hr></th>    
-						<th class=\"thtitle\">Name<hr></th>    
-						<th class=\"thtitle\">Species<hr></th>    
-						<th class=\"thtitle\">Birth Date<hr></th>   
-						<th class=\"thtitle\">Gender<hr></th>  
-						<th class=\"thtitle\">Weight<hr></th>  
-						<th class=\"thtitle\">Height<hr></th>   
-                        <th class=\"thtitle\">Origin<hr></th> 
-                        <th class=\"thtitle\">Endangered<hr></th> 
-                        <th class=\"thtitle\">Habitat<hr></th> 
-                        <th class=\"thtitle\">Diet<hr></th> 
-                        <th class=\"thtitle\">Status<hr></th> 
-                        <th class=\"thtitle\">Last Health Check<hr></th> 
-                        <th class=\"thtitle\">Treatment<hr></th> 
-						<th class=\"thtitle\">Training<hr></th>  
+						<th class=\"thtitle2\">Animal ID<hr></th>    
+						<th class=\"thtitle2\">Name<hr></th>    
+						<th class=\"thtitle2\">Species<hr></th>    
+						<th class=\"thtitle2\">Birth Date<hr></th>   
+						<th class=\"thtitle2\">Gender<hr></th>  
+						<th class=\"thtitle2\">Weight<hr></th>  
+						<th class=\"thtitle2\">Height<hr></th>   
+                        <th class=\"thtitle2\">Origin<hr></th> 
+                        <th class=\"thtitle2\">Endangered<hr></th> 
+                        <th class=\"thtitle2\">Habitat<hr></th> 
+                        <th class=\"thtitle2\">Diet<hr></th> 
+                        <th class=\"thtitle2\">Status<hr></th> 
+                        <th class=\"thtitle2\">Last Health Check<hr></th> 
+                        <th class=\"thtitle2\">Treatment<hr></th> 
+						<th class=\"thtitle2\">Training<hr></th>  
 				</tr>";
                 $arr = array();
 				if($result = $mysqli->query($query)){
                     $i = 0;
 					while(($row = $result->fetch_assoc())!= null)  {
 						echo "<tr>
-								<th>". $row['animal_id'] ."<hr></th>    
-								<th>". $row['name'] ."<hr></th>    
-								<th>". $row['species'] ."<hr></th>    
-								<th>". $row['date_of_birth'] ."<hr></th>    
-								<th>". $row['gender'] ."<hr></th>    
-								<th>". $row['weight'] ."<hr></th> 
-                                <th>". $row['height'] ."<hr></th> 
-                                <th>". $row['origin'] ."<hr></th> 
-                                <th>". $row['isEndangered'] ."<hr></th> 
-                                <th>". $row['habitat'] ."<hr></th> 
-                                <th>". $row['diet'] ."<hr></th> 
-                                <th>". $row['status'] ."<hr></th> 
-                                <th>". $row['last_health_check'] ."<hr></th> 
-                                <th><form method=\"post\"><input type=\"submit\" name=\"".$i."req\" class=\"btn3\" value=\"Request Treatment\"></form><hr></th>  
-								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."tra\" class=\"btn3\" value=\"Training Information\"></form><hr></th>  
+								<th class=\"th2\">". $row['animal_id'] ."<hr></th>    
+								<th class=\"th2\">". $row['name'] ."<hr></th>    
+								<th class=\"th2\">". $row['species'] ."<hr></th>    
+								<th class=\"th2\">". $row['date_of_birth'] ."<hr></th>    
+								<th class=\"th2\">". $row['gender'] ."<hr></th>    
+								<th class=\"th2\">". $row['weight'] ."<hr></th> 
+                                <th class=\"th2\">". $row['height'] ."<hr></th> 
+                                <th class=\"th2\">". $row['origin'] ."<hr></th> 
+                                <th class=\"th2\">". $row['isEndangered'] ."<hr></th> 
+                                <th class=\"th2\">". $row['habitat'] ."<hr></th> 
+                                <th class=\"th2\">". $row['diet'] ."<hr></th> 
+                                <th class=\"th2\">". $row['status'] ."<hr></th> 
+                                <th class=\"th2\">". $row['last_health_check'] ."<hr></th> 
+                                <th><form method=\"post\"><input type=\"submit\" name=\"".$i."req\" class=\"btn35\" value=\"Request Treatment\"></form><hr></th>  
+								<th><form method=\"post\"><input type=\"submit\" name=\"".$i."tra\" class=\"btn35\" value=\"Training Information\"></form><hr></th>  
 							</tr>";
                             $arr[$i] = $row['animal_id'];
                             $i = $i + 1;
@@ -202,13 +202,13 @@ if(isset($_POST['editpemp'])) // common for all emp
 						} else {
 							echo '<script type="text/JavaScript">
 							window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
-							window.location = "mycagesin.php";
+							window.location = "animalsincage.php";
 							 </script>';
 						}
 					}else{
 						echo '<script type="text/JavaScript">
 						window.alert("Query operation failed!'.mysqli_error($mysqli).'");
-						window.location = "mycagesin.php";
+						window.location = "animalsincage.php";
 						 </script>';
 					}
 				}
