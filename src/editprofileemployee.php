@@ -58,7 +58,7 @@ if(isset($_POST['confirmBtn'])){
 }
 
 if(isset($_POST['cancelBtn'])){
-    header("location: myprofilevisitor.php");
+    header("location: myprofileemployee.php");
 }
 
 /* Coordinator */
