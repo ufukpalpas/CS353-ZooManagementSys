@@ -137,7 +137,7 @@ if(isset($_POST['mcomment']))
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"
                             name=\"gender\" placeholder=\"" . $row['gender']. "\"readonly>";
                     if($row['discount_type'])
-                        $discount_string = "Child";
+                        $discount_string = "Student";
                     else
                         $discount_string = "Adult";
                     echo "<input class=\"leftover\" style=\"width: 40%\" type=\"text\"

@@ -23,6 +23,11 @@ if(isset($_POST['logout'])){
     header("location: index.php");
     exit;
 }
+
+if(isset($_POST['comm'])){
+	header("location: allcommentsin.php");
+}
+
 /*VISITOR*/
 if(isset($_POST['viewp']))
 	header("location: myprofilevisitor.php");
@@ -238,6 +243,12 @@ if(isset($_POST['treatreq']))
 						<div class="second">
 							<h2>Welcome to KasaloZoo</h2>
 							<p>Everything about the zoo and the animals are available online for everyone now!</p>
+							
+							<form method="post">
+								<button name="comm" class="corner-button">
+									<span class="spann">Our Comments</span>
+								</button>
+							</form>
 						</div>
 					</div>
 
@@ -273,7 +284,6 @@ if(isset($_POST['treatreq']))
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</section>
 		</main>

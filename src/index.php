@@ -174,6 +174,10 @@ if(isset($_POST['register'])){
 if(isset($_POST['emploginn'])){
 	emplogin($mysqli);
 }
+
+if(isset($_POST['comm'])){
+	header("location: allcomments.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -300,9 +304,13 @@ if(isset($_POST['emploginn'])){
 						<div class="second">
 							<h2>Welcome to KasaloZoo</h2>
 							<p>Everything about the zoo and the animals are available online for everyone now!</p>
+							<form method="post">
+								<button name="comm" class="corner-button">
+									<span class="spann">Our Comments</span>
+								</button>
+							</form>
 						</div>
 					</div>
-
 
 					<div class="owl-carousel owl-theme">
 						<div class="comment">
@@ -336,7 +344,6 @@ if(isset($_POST['emploginn'])){
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</section>
 		</main>

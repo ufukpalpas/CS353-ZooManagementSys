@@ -191,13 +191,13 @@ if(isset($_POST['mcomment']))
                         echo "<input class=\"radioMinusMargin\" type= \"radio\" name=\"check1\" id=\"Adult\" value=\"0\" >";
                         echo "<label for=\"adult\"> Adult</label>";
                         echo "<input class=\"radio\" type= \"radio\" name=\"check1\" id=\"Child\" value=\"1\" checked>";
-                        echo "<label for=\"child\" class=\"rightCheck\"> Child</label></p>";
+                        echo "<label for=\"child\" class=\"rightCheck\"> Student</label></p>";
                     }
                     else{
                         echo "<input class=\"radioMinusMargin\" type= \"radio\" name=\"check1\" id=\"Adult\" value=\"0\" checked>";
                         echo "<label for=\"adult\"> Adult</label>";
                         echo "<input class=\"radio\" type= \"radio\" name=\"check1\" id=\"Child\" value=\"1\">";
-                        echo "<label for=\"child\" class=\"rightCheck\"> Child</label></p>";
+                        echo "<label for=\"child\" class=\"rightCheck\"> Student</label></p>";
                     }
                     
                 }
