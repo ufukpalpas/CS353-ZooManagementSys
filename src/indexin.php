@@ -188,8 +188,8 @@ if(isset($_POST['treatreq']))
                         <button name="viewpemp" class="btn">View Profile</button>
                         <button name="editpemp" class="btn">Edit Profile</button>
                         <button name="treatbtn" class="btn">Treatments</button>
-			<button name="treatreq" class="btn">Treatment Requests</button>
-			<button name="invbtn" class="btn">Invitations</button>
+						<button name="treatreq" class="btn">Treatment Requests</button>
+						<button name="invbtn" class="btn">Invitations</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
                 </div>
@@ -249,14 +249,28 @@ if(isset($_POST['treatreq']))
 								<p class="comment-text">I love KasaloZoo! it is a perfect place for both children and adults...
 									<br> Perfect, visit animals closely...
 								</p>
-								<p class="comment-date">14 APRIL 2018</p>
+								<p class="comment-date">20 JANUARY 2018</p>
 							</div>
 						</div>
-						<div class="comment"><h4>2</h4>
-						
+						<div class="comment">
+							<h5>David Waterfall</h5>
+							<div class="comment-div">
+								<p class="comment-header">OMG! Sweetest Animals are Here...</p>
+								<p class="comment-text">There are thousands of animals! My children love this place enjoy and learn...
+									<br> I always prefer this place...
+								</p>
+								<p class="comment-date">31 MAY 2019</p>
+							</div>
 						</div>
-						<div class="comment"><h4>3</h4>
-						
+						<div class="comment">
+							<h5>Darlene Alderson</h5>
+							<div class="comment-div">
+								<p class="comment-header">A Perfect Zoo!</p>
+								<p class="comment-text">All animals that I want to see were here. The management of the zoo is also very delighted. 
+									<br> I recommend this place.
+								</p>
+								<p class="comment-date">24 JUNE 2020</p>
+							</div>
 						</div>
 					</div>
 

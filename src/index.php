@@ -315,11 +315,25 @@ if(isset($_POST['emploginn'])){
 								<p class="comment-date">14 APRIL 2018</p>
 							</div>
 						</div>
-						<div class="comment"><h4>2</h4>
-						
+						<div class="comment">
+							<h5>David Waterfall</h5>
+							<div class="comment-div">
+								<p class="comment-header">OMG! Sweetest Animals are Here...</p>
+								<p class="comment-text">There are thousands of animals! My children love this place enjoy and learn...
+									<br> I always prefer this place...
+								</p>
+								<p class="comment-date">31 MAY 2019</p>
+							</div>
 						</div>
-						<div class="comment"><h4>3</h4>
-						
+						<div class="comment">
+							<h5>Darlene Alderson</h5>
+							<div class="comment-div">
+								<p class="comment-header">A Perfect Zoo!</p>
+								<p class="comment-text">All animals that I want to see were here. The management of the zoo is also very delighted. 
+									<br> I recommend this place.
+								</p>
+								<p class="comment-date">24 JUNE 2020</p>
+							</div>
 						</div>
 					</div>
 

@@ -23,9 +23,9 @@ if(isset($_POST['logout'])){
 }  
 /*Vet*/
 if(isset($_POST['treatbtn']))
-	header("location: treatment.php"); //-----------------------------------------
+	header("location: treatment.php"); 
 if(isset($_POST['invbtn']))
-	header("location: myinvitations.php"); //-----------------------------------------
+	header("location: myinvitations.php"); 
 if(isset($_POST['treatreq']))
 	header("location: treatmentrequest.php");	
 if(isset($_POST['viewpemp'])) // common for all emp
@@ -136,10 +136,6 @@ if(isset($_POST['editpemp'])) // common for all emp
                 <img class=\"down\" src=\"image/user.png\" alt=\"user logo\">
                 </a>
             </li>";
-            if($usertype == "visitor")
-                echo "<li><a href=\"#\">$money
-                <img class=\"down\" src=\"image/dollar.png\" alt=\"dollar logo\">
-                </a></li>";
             ?>
         </ul>
     </nav>
@@ -166,7 +162,7 @@ if(isset($_POST['editpemp'])) // common for all emp
         }
     </script>
      <!-- CODE HERE -->
-     <div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:20%;">
+     <div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:30%;">
                 <h1 class="title">Your Treatments</h1>
                 <?php   
                 $query = "SELECT request_id, request_date, findings, animal_id  FROM treatment_request NATURAL JOIN request WHERE vet_id=".$userid." AND isAccepted = 1";

@@ -69,9 +69,11 @@ header("location: guidepage.php");
 
 /*Vet*/
 if(isset($_POST['treatbtn']))
-header("location: index.php"); //-----------------------------------------
+	header("location: treatment.php"); 
 if(isset($_POST['invbtn']))
-header("location: index.php"); //-----------------------------------------
+	header("location: myinvitations.php"); 
+if(isset($_POST['treatreq']))
+	header("location: treatmentrequest.php");	
 ?>
 
 <!DOCTYPE html>
@@ -180,9 +182,10 @@ header("location: index.php"); //-----------------------------------------
                 	<div class="close" onclick="toggleuserPopup()">×</div>
                     <h2 class="h2pop">Operations</h2>
                     <form method = "post">
-                        <button name="viewpemp" class="btn">View Profile</button>
+						<button name="viewpemp" class="btn">View Profile</button>
                         <button name="editpemp" class="btn">Edit Profile</button>
                         <button name="treatbtn" class="btn">Treatments</button>
+						<button name="treatreq" class="btn">Treatment Requests</button>
 						<button name="invbtn" class="btn">Invitations</button>
                         <button name="logout" class="btn">Logout</button>
                     </form>
