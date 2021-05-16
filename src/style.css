@@ -403,7 +403,7 @@ header .header-cases {
 	border: 1px solid currentColor;
 	padding: 1.5rem 2rem;
 	font-size: 18px;
-	color: #404040;
+	color: #5a7090;
 	position: relative;
 	transition: color .3s;
 	margin-left: 39%;
@@ -413,7 +413,7 @@ header .header-cases {
 .spann {
     position: relative;
     z-index: 2;
-	color: #404040;
+	color: #5a7090;
 }
 
 
