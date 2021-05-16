@@ -20,46 +20,54 @@ if(isset($_POST['logout'])){
 if(isset($_POST['feedbtn'])){
 	$famount = $_POST['famount'];
 	$feedtime = $_POST['feedtime'];
-	echo '<script type="text/JavaScript">
-	console.log("'.$feedtime.'");
-	</script>';
+	$feeddate = $_POST['feeddate'];
 	$barcode = $_POST['barcode'];
 	$checkquery = "select stock from food where barcode = $barcode;";
-	if($result = $mysqli->query($checkquery)) {
-		$query = "insert into regularize_food values($cageid, $barcode, \"$feedtime\", $famount, $userid);"; 
-		$query2 = "update cage set feed_time = \"$feedtime\" where cage_id = $cageid;";
-		$query3 = "update food set stock = stock - $famount where barcode = $barcode;";
-		if($result = $mysqli->query($query)) {
-			if($result2 = $mysqli->query($query2)){
-				if($result2 = $mysqli->query($query3)){
-					echo '<script type="text/JavaScript">
-					window.alert("Cage successfully feeded!");
-					window.location = "mycagesin.php";
-					</script>';
+	//if($result = $mysqli->query($checkquery)) {
+		$cheackarr = mysqli_query($mysqli, $checkquery);
+		$fetchcheckarr = mysqli_fetch_array($cheackarr, MYSQLI_ASSOC);
+		$stock = $fetchcheckarr['stock'];
+		if($stock >= $famount){
+			$query = "insert into regularize_food values($cageid, $barcode, \"$feeddate $feedtime\", $famount, $userid);"; 
+			$query2 = "update cage set feed_time = \"$feedtime\", last_care_date = \"$feeddate\" where cage_id = $cageid;";
+			$query3 = "update food set stock = stock - $famount where barcode = $barcode;";
+			if($result = $mysqli->query($query)) {
+				if($result2 = $mysqli->query($query2)){
+					if($result3 = $mysqli->query($query3)){
+						echo '<script type="text/JavaScript">
+						window.alert("Cage successfully feeded!");
+						window.location = "mycagesin.php";
+						</script>';
+					} else {
+						echo '<script type="text/JavaScript">
+						window.alert("Query3 operation failed!'.mysqli_error($mysqli).'");
+						window.location = "mycagesin.php";
+						</script>';
+					}
 				} else {
 					echo '<script type="text/JavaScript">
-					window.alert("Query3 operation failed!'.mysqli_error($mysqli).'");
+					window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
 					window.location = "mycagesin.php";
 					</script>';
 				}
 			} else {
 				echo '<script type="text/JavaScript">
-				window.alert("Query2 operation failed!'.mysqli_error($mysqli).'");
+				window.alert("Query operation failed!'.mysqli_error($mysqli).'");
 				window.location = "mycagesin.php";
 				</script>';
 			}
 		} else {
 			echo '<script type="text/JavaScript">
-			window.alert("Query operation failed!'.mysqli_error($mysqli).'");
+			window.alert("Not enough stock!");g
 			window.location = "mycagesin.php";
 			</script>';
 		}
-	} else {
+	/*} else {
 		echo '<script type="text/JavaScript">
-		window.alert("Not enough stock!");g
+		window.alert("Stock Check Query operation failed!'.mysqli_error($mysqli).'");
 		window.location = "mycagesin.php";
 		</script>';
-	}
+	}*/
 }
 
 /*Keeper*/
@@ -125,6 +133,7 @@ if(isset($_POST['editpemp'])) // common for all emp
                 	<div class="close" onclick="toggleTRPopup()">×</div>
 					<p class="h2pop">Regularize Food</p>
 					<form method = "post">
+						<input name="feeddate" class="tff" type="text" onfocus="(this.type='date')" placeholder="Feed Date" required="required">
 						<input name="feedtime" class="tff" type="text" placeholder="Feed Time (hh:mm)" required="required">
 						<input name="barcode" class="tff" type="text" placeholder="Barcode" required="required">
 						<input name="famount" class="tff" type="text" placeholder="Food Amount" required="required">
@@ -197,6 +206,8 @@ if(isset($_POST['editpemp'])) // common for all emp
 							break;
 						}
 						if(isset($_POST[$place2])){
+							$cageid = $arr[$k];
+							$_SESSION['cageid'] = $arr[$k];
 							echo '<script type="text/JavaScript">
 							toggleTRPopup();
 							</script>';
