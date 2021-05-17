@@ -190,7 +190,7 @@ if(isset($_POST['editpemp'])) // common for all emp
                     echo  "<td class='tabl'>" .$row[1] ;
                     echo  "<td class='tabl'>" .$row[3] ;
                     echo  "<td class='tabl'>" .$row[2] ;
-                    if($ingive ?? null){
+                    if(isset($ingive)){
                         echo  "<td class='tabl' style='padding-top:10px;'><img class='image' style='height : 25px; width : 27px;' src='image/tick.png'>";
                     }
                     else{

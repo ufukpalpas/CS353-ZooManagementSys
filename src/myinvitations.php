@@ -146,7 +146,7 @@ if(isset($_POST['editpemp'])) // common for all emp
 
                 $query = "SELECT vet_id, coor_id, event_id, isAccepted FROM invitation NATURAL JOIN event WHERE vet_id=".$userid. " ORDER BY start_date DESC";
                 $result = $mysqli -> query($query);
-                if($_POST['date'] ?? null){
+                if(isset($_POST['date'])){
                     $query = "SELECT vet_id, coor_id, event_id, isAccepted FROM invitation NATURAL JOIN event WHERE vet_id=".$userid." AND start_date > '".$date."' ORDER BY start_date DESC";
                     $result = $mysqli -> query($query);
                 }

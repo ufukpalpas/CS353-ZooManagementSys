@@ -148,7 +148,7 @@ if(isset($_POST['editpemp'])) // common for all emp
                 $result = $mysqli -> query($query);
          
                 
-                if($_POST['date'] ?? null){
+                if(isset($_POST['date'])){
                     $query = "SELECT * FROM treatment_request WHERE vet_id=".$userid. " AND request_date > '".$date."' ORDER BY request_date DESC";
                     $result = $mysqli -> query($query);
                 } 

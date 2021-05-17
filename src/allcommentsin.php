@@ -283,7 +283,7 @@ function console_log( $data ){
                 $query = "SELECT * FROM comment ORDER BY date DESC";
                 $result = $mysqli -> query($query); 
                 
-                if($_POST['date'] ?? null){
+                if(isset($_POST['date'])){
                     $query = "SELECT * FROM comment WHERE date > '".$date."' ORDER BY date DESC";
                     $result = $mysqli -> query($query);  
                 }      

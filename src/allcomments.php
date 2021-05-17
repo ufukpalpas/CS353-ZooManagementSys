@@ -175,11 +175,6 @@ if(isset($_POST['emploginn'])){
 	emplogin($mysqli);
 }
 
-function console_log( $data ){
-    echo '<script>';
-    echo 'console.log('. json_encode( $data ) .')';
-    echo '</script>';
-  }
 ?>
 
 <!DOCTYPE html>
@@ -329,23 +324,23 @@ function console_log( $data ){
 
     <!-- CODE HERE -->
         <div style="width:75%; height:75%;  background-color:white; margin-left: 12.5%; margin-top: 20px; border-radius: 20px; margin-bottom:30%;">
-                <h1 class="title"> Comments</h1>
+                <h2 class="title"> Comments</h2>
                 <?php   
                 echo "<form method='post' class ='date'><label for='start1'>From: </label>
                 <input type='date' name='date'>
                 <input type='submit' name='submitdate' value='LIST' class ='date_btn'></form>";
                 if(isset($_POST['submitdate'])) { 
                     $date = $_POST['date'];
-                    console_log($date);
                 }
-
+				
                 $query = "SELECT * FROM comment ORDER BY date DESC";
                 $result = $mysqli -> query($query); 
                 
-                if($_POST['date'] ?? null){
+                if(isset($_POST['date'])){
                     $query = "SELECT * FROM comment WHERE date > '".$date."' ORDER BY date DESC";
                     $result = $mysqli -> query($query);  
                 }      
+				
          
                 echo "<table class='table' >"; 
                

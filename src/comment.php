@@ -31,19 +31,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
             $anonval = 1; 
         }
         
-        if($_POST['rate5'] ?? null){ 
+        if(isset($_POST['rate5'])){ 
             $rate = 5;
         }
-        elseif($_POST['rate4'] ?? null){
+        elseif(isset($_POST['rate4'])){
             $rate = 4;
         }
-        elseif($_POST['rate3'] ?? null){
+        elseif(isset($_POST['rate3'])){
             $rate = 3;
         }
-        elseif($_POST['rate2'] ?? null){
+        elseif(isset($_POST['rate2'])){
             $rate = 2;
         }
-        elseif($_POST['rate1'] ?? null){
+        elseif(isset($_POST['rate1'])){
             $rate = 1;
         }
         $event_option = $_POST['option'];
